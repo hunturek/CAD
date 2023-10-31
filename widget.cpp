@@ -3,6 +3,8 @@
 widget::widget(QWidget *parent)
     : QOpenGLWidget{parent}
 {
+    std::fstream clear_file(filename, std::ios::out);
+    clear_file.close();
     openFile(filename,1);
 }
 
@@ -17,9 +19,10 @@ void widget::resizeGL(int w, int h) {
 
 void widget::paintGL() {
   glLoadIdentity();
+  glDisable(GL_BLEND);
   glMatrixMode(GL_PROJECTION);
   glOrtho(-1, 1, -1, 1, -10, 10);
-    glColor3f(1.0f, 0.0f, 0.0f);
+    glColor3f(1.0f, 1.0f, 1.0f);
     for (int i = 0; i < syst.amountFacets; ++i) {
           glBegin(GL_LINE_LOOP);
           for (int j = 0; j < syst.face[i].count; ++j) {
@@ -29,7 +32,9 @@ void widget::paintGL() {
           }
           glEnd();
         }
-
+    glEnable(GL_POINT_SMOOTH);
+    glEnable(GL_POINT_SPRITE);
+    glPointSize(10);
     for (int i = 0; i < syst.amountFacets; ++i) {
             glBegin(GL_POINTS);
             //  glColor3f(1.0f, 0.0f, 0.0f); //цвет отображения
@@ -52,7 +57,8 @@ void widget::add_point(double x, double y, double z){
     file.open(filename,std::ios::app);
     file << s1;
     file.close();
-    //update();
+    openFile(filename, 1);
+    update();
 }
 
 void widget::add_line(int p_num1, int p_num2){
@@ -65,11 +71,11 @@ void widget::add_line(int p_num1, int p_num2){
     file.open(filename,std::ios::app);
     file << s1;
     file.close();
-    //update();
+    openFile(filename, 1);
+    update();
 }
 
 void widget::openFile(char *filename, int fileStatus) {
-    file.open(filename, std::ios::in | std::ios::out);
     if (fileStatus != 0) res_free(&syst);
     flag = obj_counter(filename, &syst);
     flag = matrix_fill(filename, &syst);

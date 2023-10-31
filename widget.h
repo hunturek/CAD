@@ -29,7 +29,7 @@ public:
 
 
     std::ofstream file;
-    char *filename = "/Users/hunturek/Documents/test/qt tests/CAD/file.obj";
+    char *filename = "/Users/hunturek/Documents/test/qt tests/dip/file.obj";
     void add_point(double x, double y, double z);
     void add_line(int p_num1, int p_num2);
 signals:
