@@ -6,28 +6,33 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //ui->openGLWidget->openFile("skull.obj",1);
 }
 
 MainWindow::~MainWindow()
 {
+    delete ui->openGLWidget->points;
+    delete ui->openGLWidget->kernels;
     delete ui;
 }
 
 
-
-void MainWindow::on_pushButton_add_point_clicked()
+void MainWindow::on_pushButton_addPoint_clicked()
 {
-    points[p_counter] = {ui->doubleSpinBox_point_x->value(), ui->doubleSpinBox_point_y->value(), ui->doubleSpinBox_point_z->value(), p_counter};
-    ui->openGLWidget->add_point(points[p_counter].x, points[p_counter].y, points[p_counter].z);
-    p_counter++;
+    ui->openGLWidget->addPoint(ui->doubleSpinBox_pointX->value(), ui->doubleSpinBox_pointY->value(), ui->doubleSpinBox_pointZ->value());
+    ui->openGLWidget->repaint();
 }
 
 
-void MainWindow::on_pushButton_add_line_clicked()
+void MainWindow::on_pushButton_addLine_clicked()
 {
-    int num1 = ui->spinBox_line_1p->value();
-    int num2 = ui->spinBox_line_2p->value();
-    ui->openGLWidget->add_line(num1, num2);
+    ui->openGLWidget->addLine(ui->spinBox_p1->value(), ui->spinBox_p2->value());
+    ui->openGLWidget->repaint();
+}
+
+
+void MainWindow::on_pushButton_flush_clicked()
+{
+    ui->openGLWidget->flushFile();
+    ui->openGLWidget->repaint();
 }
 

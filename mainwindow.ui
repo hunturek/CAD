@@ -14,152 +14,151 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="widget" name="openGLWidget">
+   <widget class="OGLWidget" name="openGLWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>30</y>
-      <width>481</width>
-      <height>371</height>
+      <x>20</x>
+      <y>20</y>
+      <width>461</width>
+      <height>381</height>
      </rect>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>30</y>
-      <width>221</width>
-      <height>101</height>
+      <x>520</x>
+      <y>20</y>
+      <width>251</width>
+      <height>251</height>
      </rect>
     </property>
-    <property name="title">
-     <string>Add point</string>
-    </property>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_point_x">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>62</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <double>-100.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>100.000000000000000</double>
-     </property>
-     <property name="singleStep">
-      <double>0.100000000000000</double>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_point_y">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>30</y>
-       <width>62</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <double>-100.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>100.000000000000000</double>
-     </property>
-     <property name="singleStep">
-      <double>0.100000000000000</double>
-     </property>
-    </widget>
-    <widget class="QDoubleSpinBox" name="doubleSpinBox_point_z">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>30</y>
-       <width>62</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <double>-100.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>100.000000000000000</double>
-     </property>
-     <property name="singleStep">
-      <double>0.100000000000000</double>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_add_point">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>201</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Add</string>
-     </property>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>140</y>
-      <width>221</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>Add line</string>
-    </property>
-    <widget class="QPushButton" name="pushButton_add_line">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>201</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Add</string>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="spinBox_line_1p">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>30</y>
-       <width>42</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="spinBox_line_2p">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>30</y>
-       <width>42</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_4">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Add point</string>
+         </property>
+         <widget class="QWidget" name="">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>231</width>
+            <height>66</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_pointX">
+               <property name="minimum">
+                <double>-100.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>100.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_pointY">
+               <property name="minimum">
+                <double>-100.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>100.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_pointZ">
+               <property name="minimum">
+                <double>-100.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>100.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_addPoint">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Add kernel</string>
+         </property>
+         <widget class="QWidget" name="">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>231</width>
+            <height>66</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QSpinBox" name="spinBox_p1"/>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="spinBox_p2"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_addLine">
+             <property name="text">
+              <string>Add</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_flush">
+       <property name="text">
+        <string>Flush</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>widget</class>
+   <class>OGLWidget</class>
    <extends>QOpenGLWidget</extends>
-   <header>widget.h</header>
+   <header>oglwidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
