@@ -42,5 +42,3 @@ void MainWindow::on_pushButton_flush_clicked()
     ui->openGLWidget->flushFile();
     ui->openGLWidget->repaint();
 }
-
-

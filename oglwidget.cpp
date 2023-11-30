@@ -115,23 +115,25 @@ void OGLWidget::mousePressEvent(QMouseEvent *apEvent){
 }
 
 void OGLWidget::mouseMoveEvent(QMouseEvent *apEvent){
-    QPointF startPos = mPosition;
-    float tmp = 0;
-    mPosition = apEvent->position();
-    if(startPos.x() != 0 && startPos.y() != 0){
-        tmp = (startPos.x() - mPosition.x()) / 250;
-        x_left = x_left - tmp;
-        x_right = x_left + scale * 2;
-        tmp = (startPos.y() - mPosition.y()) / 250;
-        y_left = y_left + tmp;
-        y_right = y_left + scale * 2;
-        repaint();
+    if(!setAddLine){
+        QPointF startPos = mPosition;
+        float tmp = 0;
+        mPosition = apEvent->position();
+        if(startPos.x() != 0 && startPos.y() != 0){
+            tmp = (startPos.x() - mPosition.x()) / 250;
+            x_left = x_left - tmp;
+            x_right = x_left + scale * 2;
+            tmp = (startPos.y() - mPosition.y()) / 250;
+            y_left = y_left + tmp;
+            y_right = y_left + scale * 2;
+            repaint();
+        }
     }
 }
 
 void OGLWidget::wheelEvent(QWheelEvent *event){
     QPointF angle = event->angleDelta();
-    scale -= angle.y()/2000;
+    scale += angle.y()/2000;
     x_left = x_left-angle.y()/2000;
     x_right = x_right+angle.y()/2000;
     y_left = y_left-angle.y()/2000;
@@ -140,8 +142,8 @@ void OGLWidget::wheelEvent(QWheelEvent *event){
 }
 
 bool OGLWidget::behindP(int *r){
-    float x = (mPosition.x()-230)/230;
-    float y = (mPosition.y()-190)/190*(-1);
+    float x = (mPosition.x()-230*scale)/230*scale;
+    float y = (mPosition.y()-190*scale)/190*scale*(-1);
     for(int i = 0; i < p_counter; i++){
         if(x > points[i].x()-0.02 && x < points[i].x()+0.02
                 && y > points[i].y()-0.02 && y < points[i].y()+0.02){
