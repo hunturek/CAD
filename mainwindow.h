@@ -9,6 +9,7 @@
 #include <QtOpenGLWidgets>
 #include <QOpenGLFunctions>
 #include <QTimer>
+#include <QMouseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,6 +27,7 @@ public:
     QVector2D *kernels = new QVector2D;
     int p_counter = 0;
     int k_counter = 0;
+
 
 private slots:
     void on_pushButton_addPoint_clicked();

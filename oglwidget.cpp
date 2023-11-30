@@ -1,4 +1,5 @@
 #include "oglwidget.h"
+#include "ui_mainwindow.h"
 
 OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget{parent}
@@ -22,7 +23,7 @@ void OGLWidget::paintGL(){
     glLoadIdentity();
     glDisable(GL_BLEND);
     glMatrixMode(GL_PROJECTION);
-    glOrtho(-1, 1, -1, 1, -10, 10);
+    glOrtho(x_left, x_right, y_left, y_right, -10, 10);
     glColor3f(1.0f, 1.0f, 1.0f);
     for(int i = 0; i < k_counter; i++){
         glBegin(GL_LINE_LOOP);
@@ -32,6 +33,10 @@ void OGLWidget::paintGL(){
     }
     glPointSize(5);
     for(int i = 0; i < p_counter; i++){
+        if(i == red)
+            glColor3f(1.0f, 0.0f, 0.0f);
+        else
+            glColor3f(1.0f, 1.0f, 1.0f);
         glBegin(GL_POINTS);
         glVertex3f(points[i].x(), points[i].y(), points[i].z());
         glEnd();
@@ -50,12 +55,12 @@ int OGLWidget::loadFile(QString filename, QVector3D *points, QVector2D *kernels,
         if(lst.at(0) == "p"){
             points[*p_counter].setX(lst.at(1).toFloat());
             points[*p_counter].setY(lst.at(2).toFloat());
-            points[*p_counter].setZ(lst.at(3).chopped(1).toFloat());
+            points[*p_counter].setZ(lst.at(3).toFloat());
             *p_counter = *p_counter + 1;
         }
         if(lst.at(0) == "k"){
             kernels[*k_counter].setX(lst.at(1).toInt());
-            kernels[*k_counter].setY(lst.at(2).chopped(1).toInt());
+            kernels[*k_counter].setY(lst.at(2).toInt());
             *k_counter = *k_counter + 1;
         }
     }
@@ -95,3 +100,44 @@ void OGLWidget::addLine(int p1, int p2){
     file.close();
 }
 
+void OGLWidget::mousePressEvent(QMouseEvent *apEvent){
+    mPosition = apEvent->position();
+    if(setAddLine){
+        int p2 = -1;
+        if(red != -1 && behindP(&p2)){
+            addLine(red,p2);
+            red = -1;
+            repaint();
+        } else if(behindP(&red)){
+            repaint();
+        }
+    }
+}
+
+void OGLWidget::mouseMoveEvent(QMouseEvent *apEvent){
+    QPointF startPos = mPosition;
+    float tmp = 0;
+    mPosition = apEvent->position();
+    if(startPos.x() != 0 && startPos.y() != 0){
+        tmp = (startPos.x() - mPosition.x() - 230) / 230 / 1000;
+        x_left = x_left - tmp;
+        x_right = x_right - tmp;
+//        tmp = (startPos.y() - mPosition.y() - 190) / 190 / 1000;
+//        y_left = y_left - tmp;
+//        y_right = y_right - tmp;
+        repaint();
+    }
+}
+
+bool OGLWidget::behindP(int *r){
+    float x = (mPosition.x()-230)/230;
+    float y = (mPosition.y()-190)/190*(-1);
+    for(int i = 0; i < p_counter; i++){
+        if(x > points[i].x()-0.02 && x < points[i].x()+0.02
+                && y > points[i].y()-0.02 && y < points[i].y()+0.02){
+            *r = i;
+            return true;
+        }
+    }
+    return false;
+}

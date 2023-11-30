@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete ui->openGLWidget->points;
-    delete ui->openGLWidget->kernels;
+    delete points;
+    delete kernels;
     delete ui;
 }
 
@@ -25,8 +25,15 @@ void MainWindow::on_pushButton_addPoint_clicked()
 
 void MainWindow::on_pushButton_addLine_clicked()
 {
-    ui->openGLWidget->addLine(ui->spinBox_p1->value(), ui->spinBox_p2->value());
-    ui->openGLWidget->repaint();
+    if(ui->pushButton_addLine->isChecked()){
+    ui->pushButton_addLine->setChecked(true);
+    ui->openGLWidget->setAddLine = true;
+    } else {
+        ui->pushButton_addLine->setChecked(false);
+        ui->openGLWidget->setAddLine = false;
+        ui->openGLWidget->red = -1;
+        ui->openGLWidget->repaint();
+    }
 }
 
 
@@ -35,4 +42,5 @@ void MainWindow::on_pushButton_flush_clicked()
     ui->openGLWidget->flushFile();
     ui->openGLWidget->repaint();
 }
+
 

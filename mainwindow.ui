@@ -19,12 +19,12 @@
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>461</width>
-      <height>381</height>
+      <width>460</width>
+      <height>380</height>
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>520</x>
@@ -41,7 +41,7 @@
          <property name="title">
           <string>Add point</string>
          </property>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -110,7 +110,7 @@
          <property name="title">
           <string>Add kernel</string>
          </property>
-         <widget class="QWidget" name="">
+         <widget class="QWidget" name="layoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
@@ -121,19 +121,12 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-             <item>
-              <widget class="QSpinBox" name="spinBox_p1"/>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="spinBox_p2"/>
-             </item>
-            </layout>
-           </item>
-           <item>
             <widget class="QPushButton" name="pushButton_addLine">
              <property name="text">
               <string>Add</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

@@ -15,17 +15,30 @@ public:
     QVector2D *kernels = new QVector2D;
     int p_counter = 0;
     int k_counter = 0;
-    QString filename = "/Users/hunturek/Documents/test/qt tests/CAD_0_1/file.txt";
+    QString filename = "/Users/hunturek/Documents/test/qt tests/file.txt";
     void addPoint(float x, float y, float z);
     void addLine(int p1, int p2);
     void flushFile();
+    bool setAddLine = false;
+    int red = -1;
 
 signals:
 protected:
-    void initializeGL(); // Метод для инициализирования opengl
-    void resizeGL(int w, int h); // Метод вызываемый после каждого изменения размера окна
-    void paintGL(); // Метод для вывода изображения на экран
+    void initializeGL() override; // Метод для инициализирования opengl
+    void resizeGL(int w, int h) override; // Метод вызываемый после каждого изменения размера окна
+    void paintGL() override; // Метод для вывода изображения на экран
     int loadFile(QString filename, QVector3D *points, QVector2D *kernels, int *p_counter, int *k_counter);
+
+    void mousePressEvent(QMouseEvent*) override;
+    void mouseMoveEvent(QMouseEvent*) override;
+    bool behindP(int *r);
+private:
+    QPointF mPosition;
+    float x_left = -2;
+    float x_right = 2;
+    float y_left = -2;
+    float y_right = 2;
+
 };
 
 #endif // OGLWIDGET_H
