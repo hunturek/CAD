@@ -31,13 +31,15 @@ protected:
 
     void mousePressEvent(QMouseEvent*) override;
     void mouseMoveEvent(QMouseEvent*) override;
+    void wheelEvent(QWheelEvent *event) override;
     bool behindP(int *r);
 private:
     QPointF mPosition;
-    float x_left = -2;
-    float x_right = 2;
-    float y_left = -2;
-    float y_right = 2;
+    float scale = 2.0;
+    float x_left = -scale;
+    float x_right = scale;
+    float y_left = -scale;
+    float y_right = scale;
 
 };
 

@@ -10,6 +10,7 @@
 #include <QOpenGLFunctions>
 #include <QTimer>
 #include <QMouseEvent>
+#include <QWheelEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -5,7 +5,7 @@ OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget{parent}
 {
     loadFile(filename, points, kernels, &p_counter, &k_counter);
-
+    setMouseTracking(false);
 }
 
 void OGLWidget::initializeGL(){
@@ -119,14 +119,24 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *apEvent){
     float tmp = 0;
     mPosition = apEvent->position();
     if(startPos.x() != 0 && startPos.y() != 0){
-        tmp = (startPos.x() - mPosition.x() - 230) / 230 / 1000;
+        tmp = (startPos.x() - mPosition.x()) / 250;
         x_left = x_left - tmp;
-        x_right = x_right - tmp;
-//        tmp = (startPos.y() - mPosition.y() - 190) / 190 / 1000;
-//        y_left = y_left - tmp;
-//        y_right = y_right - tmp;
+        x_right = x_left + scale * 2;
+        tmp = (startPos.y() - mPosition.y()) / 250;
+        y_left = y_left + tmp;
+        y_right = y_left + scale * 2;
         repaint();
     }
+}
+
+void OGLWidget::wheelEvent(QWheelEvent *event){
+    QPointF angle = event->angleDelta();
+    scale -= angle.y()/2000;
+    x_left = x_left-angle.y()/2000;
+    x_right = x_right+angle.y()/2000;
+    y_left = y_left-angle.y()/2000;
+    y_right = y_right+angle.y()/2000;
+    repaint();
 }
 
 bool OGLWidget::behindP(int *r){
