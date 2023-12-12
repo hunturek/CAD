@@ -10,15 +10,15 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete points;
-    delete kernels;
+    delete ui->openGLWidget->i_obj.kp;
+    delete ui->openGLWidget->i_obj.l;
     delete ui;
 }
 
 
 void MainWindow::on_pushButton_addPoint_clicked()
 {
-    ui->openGLWidget->addPoint(ui->doubleSpinBox_pointX->value(), ui->doubleSpinBox_pointY->value(), ui->doubleSpinBox_pointZ->value());
+    ui->openGLWidget->addPoint(ui->doubleSpinBox_pointX->value(), ui->doubleSpinBox_pointY->value());
     ui->openGLWidget->repaint();
 }
 

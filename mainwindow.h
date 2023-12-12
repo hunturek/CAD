@@ -24,12 +24,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QVector3D *points = new QVector3D;
-    QVector2D *kernels = new QVector2D;
-    int p_counter = 0;
-    int k_counter = 0;
-
-
 private slots:
     void on_pushButton_addPoint_clicked();
 
