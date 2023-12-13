@@ -156,11 +156,11 @@ void OGLWidget::mouseMoveEvent(QMouseEvent *apEvent){
             tmp = (startPos.x() - mPosition.x()) / 250;
             x_left = x_left - tmp;
             x_right = x_left + scale * 2;
-            global_0.setX(global_0.x() + tmp*230);
+            global_0.setX(global_0.x() + tmp * 250);
             tmp = (startPos.y() - mPosition.y()) / 250;
             y_left = y_left + tmp;
             y_right = y_left + scale * 2;
-            global_0.setY(global_0.y() - tmp*190);
+            global_0.setY(global_0.y() - tmp * 250);
             repaint();
         }
     }
@@ -177,11 +177,13 @@ void OGLWidget::wheelEvent(QWheelEvent *event){
 }
 
 bool OGLWidget::behindP(int *r){
-    float x = (mPosition.x()-global_0.x())/global_0.x()*scale;
-    float y = (mPosition.y()-global_0.y())/global_0.y()*scale*(-1);
+    float x_r = abs(x_left - x_right);
+    float y_r = abs(y_left - y_right);
+    float x = x_left + (mPosition.x()/460 * x_r);
+    float y = (y_right - mPosition.y()/380 * y_r);
     for(size_t i = 0; i < c_obj.kp; i++){
-        if(x > i_obj.kp[i].x()-0.02 && x < i_obj.kp[i].x()+0.02
-                && y > i_obj.kp[i].y()-0.02 && y < i_obj.kp[i].y()+0.02){
+        if(x > i_obj.kp[i].x()-0.03 && x < i_obj.kp[i].x()+0.03
+                && y > i_obj.kp[i].y()-0.03 && y < i_obj.kp[i].y()+0.03){
             *r = i;
             return true;
         }
