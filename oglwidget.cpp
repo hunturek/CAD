@@ -34,11 +34,14 @@ void OGLWidget::paintGL(){
     glColor3f(1.0f, 0, 0);
     DrawP();
     DrawQ();
-    DrawNum(12345.67890, 0.05,-0.4,-0.4);
 }
 
 void OGLWidget::DrawL(){
     for(size_t i = 0; i < c_obj.l; i++){
+        if((int)i == redL)
+            glColor3f(1.0f, 0.0f, 0.0f);
+        else
+            glColor3f(1.0f, 1.0f, 1.0f);
         glBegin(GL_LINE_LOOP);
         glVertex2f(i_obj.kp[(int)i_obj.l[i].x()].x(), i_obj.kp[(int)i_obj.l[i].x()].y());
         glVertex2f(i_obj.kp[(int)i_obj.l[i].y()].x(), i_obj.kp[(int)i_obj.l[i].y()].y());
@@ -48,7 +51,7 @@ void OGLWidget::DrawL(){
 
 void OGLWidget::DrawKp(){
     for(size_t i = 0; i < c_obj.kp; i++){
-        if((int)i == red)
+        if((int)i == redP)
             glColor3f(1.0f, 0.0f, 0.0f);
         else
             glColor3f(1.0f, 1.0f, 1.0f);
@@ -60,12 +63,12 @@ void OGLWidget::DrawKp(){
 
 void OGLWidget::DrawP(){
     for(size_t i = 0; i < c_obj.P; i++){
-            if(i_obj.P[i].x())
-                DrawArrowX((int)i_obj.P[i].w(), orientation(i_obj.P[i].x()), modelSize()*0.3);
-            if(i_obj.P[i].y())
-                DrawArrowY((int)i_obj.P[i].w(), orientation(i_obj.P[i].y()), modelSize()*0.3);
-            if(i_obj.P[i].z())
-                DrawArrowZ((int)i_obj.P[i].w(), orientation(i_obj.P[i].z()), modelSize()*0.3);
+            if(i_obj.P[i].z() == 1)
+                DrawArrowX((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), modelSize()*0.3);
+            if(i_obj.P[i].z() == 2)
+                DrawArrowY((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), modelSize()*0.3);
+            if(i_obj.P[i].z() == 3)
+                DrawArrowZ((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), modelSize()*0.3);
     }
 }
 
@@ -261,7 +264,7 @@ void OGLWidget::DrawDot(float size, float x, float y){
 }
 
 void OGLWidget::DrawNum(float num, float size, float x, float y){
-    QString str = QString::number(num);
+    QString str = QString::number(num,'g',10);
     for(int i = 0; i < str.length(); i++){
         switch(str.at(i).unicode()){
             case '0':
@@ -316,48 +319,44 @@ int OGLWidget::loadFile(QString filename, incoming_objects *i_obj, objects_count
         QString str = file.readLine();
         QStringList lst = str.split(" ");
         if(lst.at(0) == "kp"){
-            i_obj->kp[c_obj->kp].setX(lst.at(1).toFloat());
-            i_obj->kp[c_obj->kp].setY(lst.at(2).toFloat());
+            i_obj->kp[c_obj->kp].setX(lst.at(1).toFloat()); //координата X
+            i_obj->kp[c_obj->kp].setY(lst.at(2).toFloat()); //координата Y
             c_obj->kp++;
         }
         if(lst.at(0) == "l"){
-            i_obj->l[c_obj->l].setX(lst.at(1).toInt());
-            i_obj->l[c_obj->l].setY(lst.at(2).toInt());
+            i_obj->l[c_obj->l].setX(lst.at(1).toInt()); //номер первой точки
+            i_obj->l[c_obj->l].setY(lst.at(2).toInt()); //номер второй точки
             c_obj->l++;
         }
         if(lst.at(0) == "P"){
-            i_obj->P[c_obj->P].setX(lst.at(2).toFloat());
-            i_obj->P[c_obj->P].setY(lst.at(3).toFloat());
-            i_obj->P[c_obj->P].setZ(lst.at(4).toFloat());
-            i_obj->P[c_obj->P].setW(lst.at(1).toFloat());
+            i_obj->P[c_obj->P].setX(lst.at(1).toFloat()); //номер точки
+            i_obj->P[c_obj->P].setY(lst.at(2).toFloat()); //значение
+            i_obj->P[c_obj->P].setZ(lst.at(3).toFloat()); //ось (1-x 2-y 3-z)
             c_obj->P++;
         }
         if(lst.at(0) == "m"){
-            i_obj->m[c_obj->m].setX(lst.at(2).toFloat());
-            i_obj->m[c_obj->m].setY(lst.at(3).toFloat());
-            i_obj->m[c_obj->m].setZ(lst.at(4).toFloat());
-            i_obj->m[c_obj->m].setW(lst.at(1).toFloat());
+            i_obj->m[c_obj->m].setX(lst.at(1).toFloat()); //номер точки
+            i_obj->m[c_obj->m].setY(lst.at(2).toFloat()); //значение
+            i_obj->m[c_obj->m].setZ(lst.at(3).toFloat()); //ось
             c_obj->m++;
         }
         if(lst.at(0) == "q"){
-            i_obj->q[c_obj->q].setX(lst.at(2).toFloat());
-            i_obj->q[c_obj->q].setY(lst.at(3).toFloat());
-            i_obj->q[c_obj->q].setZ(lst.at(1).toFloat());
-            i_obj->q[c_obj->q].setW(lst.at(4).toFloat());
+            i_obj->q[c_obj->q].setZ(lst.at(1).toFloat()); //номер стержня
+            i_obj->q[c_obj->q].setX(lst.at(2).toFloat()); //значение справа
+            i_obj->q[c_obj->q].setY(lst.at(3).toFloat()); //значение слева
+            i_obj->q[c_obj->q].setW(lst.at(4).toFloat()); //ось
             c_obj->q++;
         }
         if(lst.at(0) == "u"){
-            i_obj->u[c_obj->u].setX(lst.at(2).toFloat());
-            i_obj->u[c_obj->u].setY(lst.at(3).toFloat());
-            i_obj->u[c_obj->u].setZ(lst.at(4).toFloat());
-            i_obj->u[c_obj->u].setW(lst.at(1).toFloat());
+            i_obj->u[c_obj->u].setX(lst.at(1).toFloat()); //номер точки
+            i_obj->u[c_obj->u].setY(lst.at(2).toFloat()); //значение
+            i_obj->u[c_obj->u].setZ(lst.at(3).toFloat()); //ось
             c_obj->u++;
         }
         if(lst.at(0) == "r"){
-            i_obj->r[c_obj->r].setX(lst.at(2).toFloat());
-            i_obj->r[c_obj->r].setY(lst.at(3).toFloat());
-            i_obj->r[c_obj->r].setZ(lst.at(4).toFloat());
-            i_obj->r[c_obj->r].setW(lst.at(1).toFloat());
+            i_obj->r[c_obj->r].setX(lst.at(1).toFloat()); //номер точки
+            i_obj->r[c_obj->r].setY(lst.at(2).toFloat()); //значение
+            i_obj->r[c_obj->r].setZ(lst.at(3).toFloat()); //ось
             c_obj->r++;
         }
     }
@@ -399,14 +398,17 @@ void OGLWidget::mousePressEvent(QMouseEvent *apEvent){
     mPosition = apEvent->position();
     if(setAddLine){
         int p2 = -1;
-        if(red != -1 && behindP(&p2)){
-            if(p2 != red)
-                addLine(red,p2);
-            red = -1;
+        if(redP != -1 && behindP(&p2)){
+            if(p2 != redP)
+                addLine(redP,p2);
+            redP = -1;
             repaint();
-        } else if(behindP(&red)){
+        } else if(behindP(&redP)){
             repaint();
         }
+    }
+    if(behindL(&redL)){
+        repaint();
     }
 }
 
@@ -440,13 +442,24 @@ void OGLWidget::wheelEvent(QWheelEvent *event){
 }
 
 bool OGLWidget::behindP(int *r){
-    float x_r = abs(x_left - x_right);
-    float y_r = abs(y_left - y_right);
-    float x = x_left + mPosition.x()/460 * x_r;
-    float y = y_right - mPosition.y()/380 * y_r;
+    QVector2D click;
+    click.setX(x_left + mPosition.x()/460 * abs(x_left - x_right));
+    click.setY(y_right - mPosition.y()/380 * abs(y_left - y_right));
     for(size_t i = 0; i < c_obj.kp; i++){
-        if(x > i_obj.kp[i].x()-0.02*scale && x < i_obj.kp[i].x()+0.02*scale
-                && y > i_obj.kp[i].y()-0.02*scale && y < i_obj.kp[i].y()+0.02*scale){
+        if(click.distanceToPoint(i_obj.kp[i]) <= 0.02 * scale){
+            *r = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool OGLWidget::behindL(int *r){
+    QVector2D click;
+    click.setX(x_left + mPosition.x()/460 * abs(x_left - x_right));
+    click.setY(y_right - mPosition.y()/380 * abs(y_left - y_right));
+    for(size_t i = 0; i < c_obj.l; i++){
+        if(click.distanceToLine(i_obj.kp[(int)i_obj.l[i].x()], i_obj.kp[(int)i_obj.l[i].x()]) <= 0.02 * scale){
             *r = i;
             return true;
         }

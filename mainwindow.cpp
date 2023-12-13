@@ -31,7 +31,7 @@ void MainWindow::on_pushButton_addLine_clicked()
     } else {
         ui->pushButton_addLine->setChecked(false);
         ui->openGLWidget->setAddLine = false;
-        ui->openGLWidget->red = -1;
+        ui->openGLWidget->redP = -1;
         ui->openGLWidget->repaint();
     }
 }

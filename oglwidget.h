@@ -14,11 +14,11 @@ public:
     struct incoming_objects{
         QVector2D *kp = new QVector2D;
         QVector3D *l = new QVector3D;
-        QVector4D *P = new QVector4D;
-        QVector4D *m = new QVector4D;
+        QVector3D *P = new QVector3D;
+        QVector3D *m = new QVector3D;
         QVector4D *q = new QVector4D;
-        QVector4D *u = new QVector4D;
-        QVector4D *r = new QVector4D;
+        QVector3D *u = new QVector3D;
+        QVector3D *r = new QVector3D;
     };
 
     struct objects_counts{
@@ -38,7 +38,8 @@ public:
     void addLine(int p1, int p2);
     void flushFile();
     bool setAddLine = false;
-    int red = -1;
+    int redP = -1;
+    int redL = -1;
 
 signals:
 protected:
@@ -51,6 +52,7 @@ protected:
     void mouseMoveEvent(QMouseEvent*) override;
     void wheelEvent(QWheelEvent *event) override;
     bool behindP(int *r);
+    bool behindL(int *r);
 private:
     QPointF mPosition;
     float scale = 2.0;
