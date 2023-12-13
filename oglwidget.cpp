@@ -33,6 +33,8 @@ void OGLWidget::paintGL(){
     DrawKp();
     glColor3f(1.0f, 0, 0);
     DrawP();
+    DrawQ();
+    DrawNum(12345.67890, 0.05,-0.4,-0.4);
 }
 
 void OGLWidget::DrawL(){
@@ -58,64 +60,246 @@ void OGLWidget::DrawKp(){
 
 void OGLWidget::DrawP(){
     for(size_t i = 0; i < c_obj.P; i++){
-            if(i_obj.P[(int)i_obj.P[i].w()].x() > 0)
-                DrawArrowX((int)i_obj.P[i].w(), 1);
-            if(i_obj.P[(int)i_obj.P[i].w()].x() < 0)
-                DrawArrowX((int)i_obj.P[i].w(), -1);
-            if(i_obj.P[(int)i_obj.P[i].w()].y() > 0)
-                DrawArrowY((int)i_obj.P[i].w(), 1);
-            if(i_obj.P[(int)i_obj.P[i].w()].y() < 0)
-                DrawArrowY((int)i_obj.P[i].w(), -1);
-            if(i_obj.P[(int)i_obj.P[i].w()].z() > 0)
-                DrawArrowZ((int)i_obj.P[i].w(), 1);
-            if(i_obj.P[(int)i_obj.P[i].w()].z() < 0)
-                DrawArrowZ((int)i_obj.P[i].w(), -1);
+            if(i_obj.P[i].x())
+                DrawArrowX((int)i_obj.P[i].w(), orientation(i_obj.P[i].x()), modelSize()*0.3);
+            if(i_obj.P[i].y())
+                DrawArrowY((int)i_obj.P[i].w(), orientation(i_obj.P[i].y()), modelSize()*0.3);
+            if(i_obj.P[i].z())
+                DrawArrowZ((int)i_obj.P[i].w(), orientation(i_obj.P[i].z()), modelSize()*0.3);
     }
 }
 
-void OGLWidget::DrawArrowX(size_t n, float x){
+void OGLWidget::DrawQ(){
+    for(size_t i = 0; i < c_obj.q; i++){
+        if(i_obj.q[i].w() == 1)
+            DrawTrapX(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), modelSize()*0.3);
+        if(i_obj.q[i].w() == 2)
+            DrawTrapY(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), modelSize()*0.3);
+        if(i_obj.q[i].w() == 3)
+            DrawTrapZ(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), modelSize()*0.3);
+    }
+}
+
+void OGLWidget::DrawArrowX(size_t n, float x, float size){
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex2f(i_obj.kp[n].x()+0.3*x, i_obj.kp[n].y());
+    glVertex2f(i_obj.kp[n].x()+size*x, i_obj.kp[n].y());
     glEnd();
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex2f(i_obj.kp[n].x()+0.1*x, i_obj.kp[n].y()+0.1);
+    glVertex2f(i_obj.kp[n].x()+size/3*x, i_obj.kp[n].y()+size/6);
     glEnd();
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex2f(i_obj.kp[n].x()+0.1*x, i_obj.kp[n].y()-0.1);
+    glVertex2f(i_obj.kp[n].x()+size/3*x, i_obj.kp[n].y()-size/6);
     glEnd();
 }
 
-void OGLWidget::DrawArrowY(size_t n, float y){
+void OGLWidget::DrawArrowY(size_t n, float y, float size){
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y()+0.3*y);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y()+size*y);
     glEnd();
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex2f(i_obj.kp[n].x()+0.1, i_obj.kp[n].y()+0.1*y);
+    glVertex2f(i_obj.kp[n].x()+size/6, i_obj.kp[n].y()+size/3*y);
     glEnd();
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex2f(i_obj.kp[n].x()-0.1, i_obj.kp[n].y()+0.1*y);
+    glVertex2f(i_obj.kp[n].x()-size/6, i_obj.kp[n].y()+size/3*y);
     glEnd();
 }
 
-void OGLWidget::DrawArrowZ(size_t n, float z){
+void OGLWidget::DrawArrowZ(size_t n, float z, float size){
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex3f(i_obj.kp[n].x(), i_obj.kp[n].y(), 0.3*z);
+    glVertex3f(i_obj.kp[n].x(), i_obj.kp[n].y(), size*z);
     glEnd();
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex3f(i_obj.kp[n].x()+0.1, i_obj.kp[n].y(), 0.1*z);
+    glVertex3f(i_obj.kp[n].x()+size/6, i_obj.kp[n].y(), size/3*z);
     glEnd();
     glBegin(GL_LINE_LOOP);
     glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
-    glVertex3f(i_obj.kp[n].x()-0.1, i_obj.kp[n].y(), 0.1*z);
+    glVertex3f(i_obj.kp[n].x()-size/6, i_obj.kp[n].y(), size/3*z);
     glEnd();
+}
+
+void OGLWidget::DrawTrapX(size_t n, float x1, float x2, float size){
+    DrawArrowX(i_obj.l[n].x(), x1, size);
+    DrawArrowX(i_obj.l[n].y(), x2, size);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[(int)i_obj.l[n].x()].x()+size*x1, i_obj.kp[(int)i_obj.l[n].x()].y());
+    glVertex2f(i_obj.kp[(int)i_obj.l[n].y()].x()+size*x2, i_obj.kp[(int)i_obj.l[n].y()].y());
+    glEnd();
+}
+
+void OGLWidget::DrawTrapY(size_t n, float y1, float y2, float size){
+    DrawArrowY(i_obj.l[n].x(), y1, size);
+    DrawArrowY(i_obj.l[n].y(), y2, size);
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[(int)i_obj.l[n].x()].x(), i_obj.kp[(int)i_obj.l[n].x()].y()+size*y1);
+    glVertex2f(i_obj.kp[(int)i_obj.l[n].y()].x(), i_obj.kp[(int)i_obj.l[n].y()].y()+size*y2);
+    glEnd();
+}
+
+void OGLWidget::DrawTrapZ(size_t n, float z1, float z2, float size){
+    DrawArrowZ(i_obj.l[n].x(), z1, size);
+    DrawArrowZ(i_obj.l[n].y(), z2, size);
+    glBegin(GL_LINE_LOOP);
+    glVertex3f(i_obj.kp[(int)i_obj.l[n].x()].x(), i_obj.kp[(int)i_obj.l[n].x()].y(), size*z1);
+    glVertex3f(i_obj.kp[(int)i_obj.l[n].y()].x(), i_obj.kp[(int)i_obj.l[n].y()].y(), size*z2);
+    glEnd();
+}
+
+void OGLWidget::Draw0(float size, float x, float y){
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(x,y);
+    glVertex2f(x+size,y);
+    glVertex2f(x+size,y-2*size);
+    glVertex2f(x,y-2*size);
+    glEnd();
+}
+
+void OGLWidget::Draw1(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x,y-size);
+    glVertex2f(x+size,y);
+    glVertex2f(x+size,y-2*size);
+    glEnd();
+}
+
+void OGLWidget::Draw2(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x,y);
+    glVertex2f(x+size,y);
+    glVertex2f(x+size,y-size);
+    glVertex2f(x,y-size);
+    glVertex2f(x,y-2*size);
+    glVertex2f(x+size,y-2*size);
+    glEnd();
+}
+
+void OGLWidget::Draw3(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x,y);
+    glVertex2f(x+size,y);
+    glVertex2f(x+size,y-size);
+    glVertex2f(x,y-size);
+    glVertex2f(x+size,y-size);
+    glVertex2f(x+size,y-2*size);
+    glVertex2f(x,y-2*size);
+    glEnd();
+}
+
+void OGLWidget::Draw4(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x,y);
+    glVertex2f(x,y-size);
+    glVertex2f(x+size,y-size);
+    glVertex2f(x+size,y);
+    glVertex2f(x+size,y-2*size);
+    glEnd();
+}
+
+void OGLWidget::Draw5(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x+size,y);
+    glVertex2f(x,y);
+    glVertex2f(x,y-size);
+    glVertex2f(x+size,y-size);
+    glVertex2f(x+size,y-2*size);
+    glVertex2f(x,y-2*size);
+    glEnd();
+}
+
+void OGLWidget::Draw6(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x+size,y);
+    glVertex2f(x,y);
+    glVertex2f(x,y-2*size);
+    glVertex2f(x+size,y-2*size);
+    glVertex2f(x+size,y-size);
+    glVertex2f(x,y-size);
+    glEnd();
+}
+
+void OGLWidget::Draw7(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x,y);
+    glVertex2f(x+size,y);
+    glVertex2f(x+size,y-2*size);
+    glEnd();
+}
+
+void OGLWidget::Draw8(float size, float x, float y){
+    Draw0(size,x,y);
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x+size,y-size);
+    glVertex2f(x,y-size);
+    glEnd();
+}
+
+void OGLWidget::Draw9(float size, float x, float y){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x,y-2*size);
+    glVertex2f(x+size,y-2*size);
+    glVertex2f(x+size,y);
+    glVertex2f(x,y);
+    glVertex2f(x,y-size);
+    glVertex2f(x+size,y-size);
+    glEnd();
+}
+
+void OGLWidget::DrawDot(float size, float x, float y){
+    glBegin(GL_POLYGON);
+    glVertex2f(x+2*size/5, y-2*size);
+    glVertex2f(x+3*size/5, y-2*size);
+    glVertex2f(x+3*size/5, y-2*size+size/5);
+    glVertex2f(x+2*size/5, y-2*size+size/5);
+    glEnd();
+}
+
+void OGLWidget::DrawNum(float num, float size, float x, float y){
+    QString str = QString::number(num);
+    for(int i = 0; i < str.length(); i++){
+        switch(str.at(i).unicode()){
+            case '0':
+                Draw0(size, x, y);
+            break;
+            case '1':
+                Draw1(size, x, y);
+            break;
+            case '2':
+                Draw2(size, x, y);
+            break;
+            case '3':
+                Draw3(size, x, y);
+            break;
+            case '4':
+                Draw4(size, x, y);
+            break;
+            case '5':
+                Draw5(size, x, y);
+            break;
+            case '6':
+                Draw6(size, x, y);
+            break;
+            case '7':
+                Draw7(size, x, y);
+            break;
+            case '8':
+                Draw8(size, x, y);
+            break;
+            case '9':
+                Draw9(size, x, y);
+            break;
+            case '.':
+                DrawDot(size, x, y);
+            break;
+        }
+        x += size + size/3;
+    }
 }
 
 int OGLWidget::loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj){
@@ -149,26 +333,31 @@ int OGLWidget::loadFile(QString filename, incoming_objects *i_obj, objects_count
             c_obj->P++;
         }
         if(lst.at(0) == "m"){
-            i_obj->m[c_obj->m].setX(lst.at(1).toFloat());
-            i_obj->m[c_obj->m].setY(lst.at(2).toFloat());
-            i_obj->m[c_obj->m].setZ(lst.at(3).toFloat());
+            i_obj->m[c_obj->m].setX(lst.at(2).toFloat());
+            i_obj->m[c_obj->m].setY(lst.at(3).toFloat());
+            i_obj->m[c_obj->m].setZ(lst.at(4).toFloat());
+            i_obj->m[c_obj->m].setW(lst.at(1).toFloat());
             c_obj->m++;
         }
         if(lst.at(0) == "q"){
-            i_obj->q[c_obj->q].setX(lst.at(1).toFloat());
-            i_obj->q[c_obj->q].setY(lst.at(2).toFloat());
+            i_obj->q[c_obj->q].setX(lst.at(2).toFloat());
+            i_obj->q[c_obj->q].setY(lst.at(3).toFloat());
+            i_obj->q[c_obj->q].setZ(lst.at(1).toFloat());
+            i_obj->q[c_obj->q].setW(lst.at(4).toFloat());
             c_obj->q++;
         }
         if(lst.at(0) == "u"){
-            i_obj->u[c_obj->u].setX(lst.at(1).toFloat());
-            i_obj->u[c_obj->u].setY(lst.at(2).toFloat());
-            i_obj->u[c_obj->u].setZ(lst.at(3).toFloat());
+            i_obj->u[c_obj->u].setX(lst.at(2).toFloat());
+            i_obj->u[c_obj->u].setY(lst.at(3).toFloat());
+            i_obj->u[c_obj->u].setZ(lst.at(4).toFloat());
+            i_obj->u[c_obj->u].setW(lst.at(1).toFloat());
             c_obj->u++;
         }
         if(lst.at(0) == "r"){
-            i_obj->r[c_obj->r].setX(lst.at(1).toFloat());
-            i_obj->r[c_obj->r].setY(lst.at(2).toFloat());
-            i_obj->r[c_obj->r].setZ(lst.at(3).toFloat());
+            i_obj->r[c_obj->r].setX(lst.at(2).toFloat());
+            i_obj->r[c_obj->r].setY(lst.at(3).toFloat());
+            i_obj->r[c_obj->r].setZ(lst.at(4).toFloat());
+            i_obj->r[c_obj->r].setW(lst.at(1).toFloat());
             c_obj->r++;
         }
     }
@@ -263,4 +452,29 @@ bool OGLWidget::behindP(int *r){
         }
     }
     return false;
+}
+
+float OGLWidget::modelSize(){
+    QVector2D min = {i_obj.kp[0].x(), i_obj.kp[0].y()};
+    QVector2D max = {i_obj.kp[0].x(), i_obj.kp[0].y()};
+    for(size_t i = 0; i < c_obj.kp; i++){
+        if (i_obj.kp[i].x() < min.x())
+            min.setX(i_obj.kp[i].x());
+        if (i_obj.kp[i].x() > max.x())
+            max.setX(i_obj.kp[i].x());
+        if (i_obj.kp[i].y() < min.y())
+            min.setY(i_obj.kp[i].y());
+        if (i_obj.kp[i].y() > max.y())
+            max.setY(i_obj.kp[i].y());
+    }
+    return min.distanceToPoint(max);
+}
+
+int OGLWidget::orientation(float x){
+    int f = 0;
+    if(x > 0)
+        f = 1;
+    if(x < 0)
+        f = -1;
+    return f;
 }

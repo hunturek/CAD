@@ -13,12 +13,12 @@ public:
 
     struct incoming_objects{
         QVector2D *kp = new QVector2D;
-        QVector2D *l = new QVector2D;
+        QVector3D *l = new QVector3D;
         QVector4D *P = new QVector4D;
-        QVector3D *m = new QVector3D;
-        QVector2D *q = new QVector2D;
-        QVector3D *u = new QVector3D;
-        QVector3D *r = new QVector3D;
+        QVector4D *m = new QVector4D;
+        QVector4D *q = new QVector4D;
+        QVector4D *u = new QVector4D;
+        QVector4D *r = new QVector4D;
     };
 
     struct objects_counts{
@@ -63,9 +63,27 @@ private:
     void DrawL();
     void DrawKp();
     void DrawP();
-    void DrawArrowX(size_t n, float x);
-    void DrawArrowY(size_t n, float y);
-    void DrawArrowZ(size_t n, float z);
+    void DrawQ();
+    void DrawTrapX(size_t n, float x1, float x2, float size);
+    void DrawTrapY(size_t n, float y1, float y2, float size);
+    void DrawTrapZ(size_t n, float z1, float z2, float size);
+    void DrawArrowX(size_t n, float x, float size);
+    void DrawArrowY(size_t n, float y, float size);
+    void DrawArrowZ(size_t n, float z, float size);
+    float modelSize();
+    int orientation(float x);
+    void DrawNum(float num, float size, float x, float y);
+    void Draw0(float size, float x, float y);
+    void Draw1(float size, float x, float y);
+    void Draw2(float size, float x, float y);
+    void Draw3(float size, float x, float y);
+    void Draw4(float size, float x, float y);
+    void Draw5(float size, float x, float y);
+    void Draw6(float size, float x, float y);
+    void Draw7(float size, float x, float y);
+    void Draw8(float size, float x, float y);
+    void Draw9(float size, float x, float y);
+    void DrawDot(float size, float x, float y);
 };
 
 #endif // OGLWIDGET_H
