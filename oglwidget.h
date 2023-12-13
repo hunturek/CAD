@@ -14,7 +14,7 @@ public:
     struct incoming_objects{
         QVector2D *kp = new QVector2D;
         QVector2D *l = new QVector2D;
-        QVector3D *P = new QVector3D;
+        QVector4D *P = new QVector4D;
         QVector3D *m = new QVector3D;
         QVector2D *q = new QVector2D;
         QVector3D *u = new QVector3D;
@@ -60,6 +60,12 @@ private:
     float y_right = scale;
     QVector3D global_0;
 
+    void DrawL();
+    void DrawKp();
+    void DrawP();
+    void DrawArrowX(size_t n, float x);
+    void DrawArrowY(size_t n, float y);
+    void DrawArrowZ(size_t n, float z);
 };
 
 #endif // OGLWIDGET_H

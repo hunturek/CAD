@@ -28,13 +28,23 @@ void OGLWidget::paintGL(){
     glMatrixMode(GL_PROJECTION);
     glOrtho(x_left, x_right, y_left, y_right, -10, 10);
     glColor3f(1.0f, 1.0f, 1.0f);
+    glPointSize(5);
+    DrawL();
+    DrawKp();
+    glColor3f(1.0f, 0, 0);
+    DrawP();
+}
+
+void OGLWidget::DrawL(){
     for(size_t i = 0; i < c_obj.l; i++){
         glBegin(GL_LINE_LOOP);
         glVertex2f(i_obj.kp[(int)i_obj.l[i].x()].x(), i_obj.kp[(int)i_obj.l[i].x()].y());
         glVertex2f(i_obj.kp[(int)i_obj.l[i].y()].x(), i_obj.kp[(int)i_obj.l[i].y()].y());
         glEnd();
     }
-    glPointSize(5);
+}
+
+void OGLWidget::DrawKp(){
     for(size_t i = 0; i < c_obj.kp; i++){
         if((int)i == red)
             glColor3f(1.0f, 0.0f, 0.0f);
@@ -44,6 +54,68 @@ void OGLWidget::paintGL(){
         glVertex2f(i_obj.kp[i].x(), i_obj.kp[i].y());
         glEnd();
     }
+}
+
+void OGLWidget::DrawP(){
+    for(size_t i = 0; i < c_obj.P; i++){
+            if(i_obj.P[(int)i_obj.P[i].w()].x() > 0)
+                DrawArrowX((int)i_obj.P[i].w(), 1);
+            if(i_obj.P[(int)i_obj.P[i].w()].x() < 0)
+                DrawArrowX((int)i_obj.P[i].w(), -1);
+            if(i_obj.P[(int)i_obj.P[i].w()].y() > 0)
+                DrawArrowY((int)i_obj.P[i].w(), 1);
+            if(i_obj.P[(int)i_obj.P[i].w()].y() < 0)
+                DrawArrowY((int)i_obj.P[i].w(), -1);
+            if(i_obj.P[(int)i_obj.P[i].w()].z() > 0)
+                DrawArrowZ((int)i_obj.P[i].w(), 1);
+            if(i_obj.P[(int)i_obj.P[i].w()].z() < 0)
+                DrawArrowZ((int)i_obj.P[i].w(), -1);
+    }
+}
+
+void OGLWidget::DrawArrowX(size_t n, float x){
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex2f(i_obj.kp[n].x()+0.3*x, i_obj.kp[n].y());
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex2f(i_obj.kp[n].x()+0.1*x, i_obj.kp[n].y()+0.1);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex2f(i_obj.kp[n].x()+0.1*x, i_obj.kp[n].y()-0.1);
+    glEnd();
+}
+
+void OGLWidget::DrawArrowY(size_t n, float y){
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y()+0.3*y);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex2f(i_obj.kp[n].x()+0.1, i_obj.kp[n].y()+0.1*y);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex2f(i_obj.kp[n].x()-0.1, i_obj.kp[n].y()+0.1*y);
+    glEnd();
+}
+
+void OGLWidget::DrawArrowZ(size_t n, float z){
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex3f(i_obj.kp[n].x(), i_obj.kp[n].y(), 0.3*z);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex3f(i_obj.kp[n].x()+0.1, i_obj.kp[n].y(), 0.1*z);
+    glEnd();
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(i_obj.kp[n].x(), i_obj.kp[n].y());
+    glVertex3f(i_obj.kp[n].x()-0.1, i_obj.kp[n].y(), 0.1*z);
+    glEnd();
 }
 
 int OGLWidget::loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj){
@@ -70,9 +142,10 @@ int OGLWidget::loadFile(QString filename, incoming_objects *i_obj, objects_count
             c_obj->l++;
         }
         if(lst.at(0) == "P"){
-            i_obj->P[c_obj->P].setX(lst.at(1).toFloat());
-            i_obj->P[c_obj->P].setY(lst.at(2).toFloat());
-            i_obj->P[c_obj->P].setZ(lst.at(3).toFloat());
+            i_obj->P[c_obj->P].setX(lst.at(2).toFloat());
+            i_obj->P[c_obj->P].setY(lst.at(3).toFloat());
+            i_obj->P[c_obj->P].setZ(lst.at(4).toFloat());
+            i_obj->P[c_obj->P].setW(lst.at(1).toFloat());
             c_obj->P++;
         }
         if(lst.at(0) == "m"){
@@ -138,7 +211,8 @@ void OGLWidget::mousePressEvent(QMouseEvent *apEvent){
     if(setAddLine){
         int p2 = -1;
         if(red != -1 && behindP(&p2)){
-            addLine(red,p2);
+            if(p2 != red)
+                addLine(red,p2);
             red = -1;
             repaint();
         } else if(behindP(&red)){
@@ -179,11 +253,11 @@ void OGLWidget::wheelEvent(QWheelEvent *event){
 bool OGLWidget::behindP(int *r){
     float x_r = abs(x_left - x_right);
     float y_r = abs(y_left - y_right);
-    float x = x_left + (mPosition.x()/460 * x_r);
-    float y = (y_right - mPosition.y()/380 * y_r);
+    float x = x_left + mPosition.x()/460 * x_r;
+    float y = y_right - mPosition.y()/380 * y_r;
     for(size_t i = 0; i < c_obj.kp; i++){
-        if(x > i_obj.kp[i].x()-0.03 && x < i_obj.kp[i].x()+0.03
-                && y > i_obj.kp[i].y()-0.03 && y < i_obj.kp[i].y()+0.03){
+        if(x > i_obj.kp[i].x()-0.02*scale && x < i_obj.kp[i].x()+0.02*scale
+                && y > i_obj.kp[i].y()-0.02*scale && y < i_obj.kp[i].y()+0.02*scale){
             *r = i;
             return true;
         }
