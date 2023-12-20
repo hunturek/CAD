@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(ui->pushButton_res, &QPushButton::clicked, this, &MainWindow::on_pushButton_res_clicked);
 }
 
 MainWindow::~MainWindow()
@@ -41,4 +42,9 @@ void MainWindow::on_pushButton_flush_clicked()
 {
     ui->openGLWidget->flushFile();
     ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_pushButton_res_clicked(){
+    ui->openGLWidget->fill_o(&ui->openGLWidget->o_obj);
+    ui->openGLWidget->outFile("/home/denis/c++/o_file.txt", ui->openGLWidget->o_obj);
 }

@@ -31,12 +31,25 @@ public:
         size_t r = 0;
     };
 
+    struct outcoming_objects{
+        QVector2D *Q = new QVector2D; //значение слева, значение справа
+        QVector4D *M = new QVector4D; //значение слева, значение справа, удаленность от левой, значение в середине
+        QVector2D *N = new QVector2D; //значение слева, значение справа
+        QVector2D *V = new QVector2D; //значение слева, значение справа
+        QVector2D *U = new QVector2D; //значение слева, значение справа
+        QVector2D *Sig = new QVector2D; //значение слева, значение справа
+    };
+
     incoming_objects i_obj;
     objects_counts c_obj;
+    outcoming_objects o_obj;
     QString filename = "/home/denis/c++/file.txt";
     void addPoint(float x, float y);
     void addLine(int p1, int p2);
     void flushFile();
+    int loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj);
+    int outFile(QString filename, outcoming_objects o_obj);
+    void fill_o(outcoming_objects *o_obj);
     bool setAddLine = false;
     int redP = -1;
     int redL = -1;
@@ -46,13 +59,15 @@ protected:
     void initializeGL() override; // Метод для инициализирования opengl
     void resizeGL(int w, int h) override; // Метод вызываемый после каждого изменения размера окна
     void paintGL() override; // Метод для вывода изображения на экран
-    int loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj);
 
     void mousePressEvent(QMouseEvent*) override;
     void mouseMoveEvent(QMouseEvent*) override;
     void wheelEvent(QWheelEvent *event) override;
     bool behindP(int *r);
     bool behindL(int *r);
+
+    // SUDA DAVAY
+
 private:
     QPointF mPosition;
     float scale = 2.0;
