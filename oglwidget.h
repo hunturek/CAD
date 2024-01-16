@@ -43,7 +43,8 @@ public:
     incoming_objects i_obj;
     objects_counts c_obj;
     outcoming_objects o_obj;
-    QString filename = "/home/denis/c++/file.txt";
+    QString i_filename = "";
+    QString o_filename = "";
     void addPoint(float x, float y);
     void addLine(int p1, int p2);
     void flushFile();

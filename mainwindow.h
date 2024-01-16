@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVector3D>
 #include <QFile>
+#include <QFileDialog>
 #include <QtWidgets/QWidget>
 #include <QtOpenGL>
 #include <QtOpenGLWidgets>
@@ -32,6 +33,10 @@ private slots:
     void on_pushButton_flush_clicked();
 
     void on_pushButton_res_clicked();
+
+    void on_pushButton_addLine_coords_clicked();
+
+    void on_pushButton_loadFile_clicked();
 
 private:
     Ui::MainWindow *ui;

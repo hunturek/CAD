@@ -111,7 +111,7 @@ bool OGLWidget::behindL(int *r){
     click.setX(x_left + mPosition.x()/460 * abs(x_left - x_right));
     click.setY(y_right - mPosition.y()/380 * abs(y_left - y_right));
     for(size_t i = 0; i < c_obj.l; i++){
-        if(click.distanceToLine(i_obj.kp[(int)i_obj.l[i].x()], i_obj.kp[(int)i_obj.l[i].x()]) <= 0.02 * scale){
+        if(click.distanceToLine(i_obj.kp[(int)i_obj.l[i].y()], i_obj.kp[(int)i_obj.l[i].x()]) <= 0.02 * scale){
             *r = i;
             return true;
         }
@@ -142,4 +142,35 @@ int OGLWidget::orientation(float x){
     if(x < 0)
         f = -1;
     return f;
+}
+
+
+void OGLWidget::flushFile(){
+    QFile file(i_filename);
+    file.open(QIODevice::WriteOnly);
+    file.close();
+}
+
+void OGLWidget::addPoint(float x, float y){
+    QString s1 = "\nkp ";
+    s1.append(QString::number(x));
+    s1.append(" ");
+    s1.append(QString::number(y));
+    QFile file(i_filename);
+    QTextStream writeStream(&file);
+    file.open(QIODevice::Append);
+    writeStream << s1;
+    file.close();
+}
+
+void OGLWidget::addLine(int p1, int p2){
+    QString s1 = "\nl ";
+    s1.append(QString::number(p1));
+    s1.append(" ");
+    s1.append(QString::number(p2));
+    QFile file(i_filename);
+    QTextStream writeStream(&file);
+    file.open(QIODevice::Append | QIODevice::Text);
+    writeStream << s1;
+    file.close();
 }
