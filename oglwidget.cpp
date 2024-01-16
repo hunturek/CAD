@@ -33,6 +33,9 @@ void OGLWidget::paintGL(){
     glPointSize(5);
     DrawL();
     DrawKp();
+    glColor3f(0, 1.0f, 0);
+    if(kpNumsShow)
+        DrawKpNum();
     glColor3f(1.0f, 0, 0);
     DrawP();
     DrawQ();
@@ -304,6 +307,13 @@ void OGLWidget::DrawNum(float num, float size, float x, float y){
             break;
         }
         x += size + size/3;
+    }
+}
+
+void OGLWidget::DrawKpNum(){
+    float size = scale/40;
+    for(size_t i = 0; i < c_obj.kp; i++){
+        DrawNum(i, size, i_obj.kp[i].x()+size, i_obj.kp[i].y()-size);
     }
 }
 

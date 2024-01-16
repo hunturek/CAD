@@ -174,3 +174,20 @@ void OGLWidget::addLine(int p1, int p2){
     writeStream << s1;
     file.close();
 }
+
+void OGLWidget::addP(int pNum, float value, int axis){
+    QString s1 = "\nP ";
+    s1.append(QString::number(pNum));
+    s1.append(" ");
+    s1.append(QString::number(value));
+    s1.append(" ");
+    s1.append(QString::number(axis));
+    s1.append(" ");
+    QFile file(i_filename);
+    QTextStream writeStream(&file);
+    file.open(QIODevice::Append | QIODevice::Text);
+    writeStream << s1;
+    file.close();
+}
+
+

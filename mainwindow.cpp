@@ -67,3 +67,18 @@ void MainWindow::on_pushButton_loadFile_clicked()
         ui->label_openFile->setStyleSheet("QLabel { color : red; }");
     }
 }
+
+void MainWindow::on_pushButton_addP_clicked()
+{
+    ui->openGLWidget->addP(ui->spinBox_point_numberP->value(), ui->doubleSpinBox_valueP->value(), ui->comboBox_axisP->currentIndex()+1);
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_pushButton_kpNums_clicked()
+{
+    if(ui->pushButton_kpNums->isChecked())
+        ui->openGLWidget->kpNumsShow = 1;
+    else
+        ui->openGLWidget->kpNumsShow = 0;
+    ui->openGLWidget->repaint();
+}

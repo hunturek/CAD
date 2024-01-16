@@ -38,6 +38,10 @@ private slots:
 
     void on_pushButton_loadFile_clicked();
 
+    void on_pushButton_addP_clicked();
+
+    void on_pushButton_kpNums_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

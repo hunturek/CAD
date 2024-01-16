@@ -47,6 +47,7 @@ public:
     QString o_filename = "";
     void addPoint(float x, float y);
     void addLine(int p1, int p2);
+    void addP(int pNum, float value, int axis);
     void flushFile();
     int loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj);
     int outFile(QString filename, outcoming_objects o_obj);
@@ -54,6 +55,8 @@ public:
     bool setAddLine = false;
     int redP = -1;
     int redL = -1;
+    int kpNumsShow = 0;
+    int lNumsShow = 0;
 
 signals:
 protected:
@@ -88,8 +91,6 @@ private:
     void DrawArrowX(size_t n, float x, float size);
     void DrawArrowY(size_t n, float y, float size);
     void DrawArrowZ(size_t n, float z, float size);
-    float modelSize();
-    int orientation(float x);
     void DrawNum(float num, float size, float x, float y);
     void Draw0(float size, float x, float y);
     void Draw1(float size, float x, float y);
@@ -102,6 +103,10 @@ private:
     void Draw8(float size, float x, float y);
     void Draw9(float size, float x, float y);
     void DrawDot(float size, float x, float y);
+    void DrawKpNum();
+
+    float modelSize();
+    int orientation(float x);
 };
 
 #endif // OGLWIDGET_H
