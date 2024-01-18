@@ -106,19 +106,6 @@ bool OGLWidget::behindP(int *r){
     return false;
 }
 
-bool OGLWidget::behindL(int *r){
-    QVector2D click;
-    click.setX(x_left + mPosition.x()/460 * abs(x_left - x_right));
-    click.setY(y_right - mPosition.y()/380 * abs(y_left - y_right));
-    for(size_t i = 0; i < c_obj.l; i++){
-        if(click.distanceToLine(i_obj.kp[(int)i_obj.l[i].y()], i_obj.kp[(int)i_obj.l[i].x()]) <= 0.02 * scale){
-            *r = i;
-            return true;
-        }
-    }
-    return false;
-}
-
 float OGLWidget::modelSize(){
     QVector2D min = {i_obj.kp[0].x(), i_obj.kp[0].y()};
     QVector2D max = {i_obj.kp[0].x(), i_obj.kp[0].y()};
@@ -190,4 +177,19 @@ void OGLWidget::addP(int pNum, float value, int axis){
     file.close();
 }
 
-
+void OGLWidget::addQ(int kNum, float value1, float value2, int axis){
+    QString s1 = "\nq ";
+    s1.append(QString::number(kNum));
+    s1.append(" ");
+    s1.append(QString::number(value1));
+    s1.append(" ");
+    s1.append(QString::number(value2));
+    s1.append(" ");
+    s1.append(QString::number(axis));
+    s1.append(" ");
+    QFile file(i_filename);
+    QTextStream writeStream(&file);
+    file.open(QIODevice::Append | QIODevice::Text);
+    writeStream << s1;
+    file.close();
+}

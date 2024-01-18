@@ -48,13 +48,13 @@ public:
     void addPoint(float x, float y);
     void addLine(int p1, int p2);
     void addP(int pNum, float value, int axis);
+    void addQ(int kNum, float value1, float value2, int axis);
     void flushFile();
     int loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj);
     int outFile(QString filename, outcoming_objects o_obj);
     void fill_o(outcoming_objects *o_obj);
     bool setAddLine = false;
     int redP = -1;
-    int redL = -1;
     int kpNumsShow = 0;
     int lNumsShow = 0;
 
@@ -68,7 +68,6 @@ protected:
     void mouseMoveEvent(QMouseEvent*) override;
     void wheelEvent(QWheelEvent *event) override;
     bool behindP(int *r);
-    bool behindL(int *r);
 
     // SUDA DAVAY
 
@@ -104,6 +103,7 @@ private:
     void Draw9(float size, float x, float y);
     void DrawDot(float size, float x, float y);
     void DrawKpNum();
+    void DrawLNum();
 
     float modelSize();
     int orientation(float x);

@@ -36,6 +36,9 @@ void OGLWidget::paintGL(){
     glColor3f(0, 1.0f, 0);
     if(kpNumsShow)
         DrawKpNum();
+    glColor3f(0, 0, 1.0f);
+    if(lNumsShow)
+        DrawLNum();
     glColor3f(1.0f, 0, 0);
     DrawP();
     DrawQ();
@@ -43,10 +46,7 @@ void OGLWidget::paintGL(){
 
 void OGLWidget::DrawL(){
     for(size_t i = 0; i < c_obj.l; i++){
-        if((int)i == redL)
-            glColor3f(1.0f, 0.0f, 0.0f);
-        else
-            glColor3f(1.0f, 1.0f, 1.0f);
+        glColor3f(1.0f, 1.0f, 1.0f);
         glBegin(GL_LINE_LOOP);
         glVertex2f(i_obj.kp[(int)i_obj.l[i].x()].x(), i_obj.kp[(int)i_obj.l[i].x()].y());
         glVertex2f(i_obj.kp[(int)i_obj.l[i].y()].x(), i_obj.kp[(int)i_obj.l[i].y()].y());
@@ -69,22 +69,22 @@ void OGLWidget::DrawKp(){
 void OGLWidget::DrawP(){
     for(size_t i = 0; i < c_obj.P; i++){
             if(i_obj.P[i].z() == 1)
-                DrawArrowX((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), modelSize()*0.3);
+                DrawArrowX((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), scale*0.2);
             if(i_obj.P[i].z() == 2)
-                DrawArrowY((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), modelSize()*0.3);
+                DrawArrowY((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), scale*0.2);
             if(i_obj.P[i].z() == 3)
-                DrawArrowZ((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), modelSize()*0.3);
+                DrawArrowZ((int)i_obj.P[i].x(), orientation(i_obj.P[i].y()), scale*0.2);
     }
 }
 
 void OGLWidget::DrawQ(){
     for(size_t i = 0; i < c_obj.q; i++){
         if(i_obj.q[i].w() == 1)
-            DrawTrapX(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), modelSize()*0.3);
+            DrawTrapX(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), scale*0.2);
         if(i_obj.q[i].w() == 2)
-            DrawTrapY(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), modelSize()*0.3);
+            DrawTrapY(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), scale*0.2);
         if(i_obj.q[i].w() == 3)
-            DrawTrapZ(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), modelSize()*0.3);
+            DrawTrapZ(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), scale*0.2);
     }
 }
 
@@ -317,6 +317,20 @@ void OGLWidget::DrawKpNum(){
     }
 }
 
+void OGLWidget::DrawLNum(){
+    float size = scale/40;
+    float x, y;
+    for(size_t i = 0; i < c_obj.l; i++){
+         x = (i_obj.kp[(int)i_obj.l[i].x()].x() + i_obj.kp[(int)i_obj.l[i].y()].x()) / 2;
+         y = (i_obj.kp[(int)i_obj.l[i].x()].y() + i_obj.kp[(int)i_obj.l[i].y()].y()) / 2;
+         if(i_obj.kp[(int)i_obj.l[i].x()].x() != i_obj.kp[(int)i_obj.l[i].y()].x())
+             y -= size;
+         if(i_obj.kp[(int)i_obj.l[i].x()].y() != i_obj.kp[(int)i_obj.l[i].y()].y())
+             x += size;
+         DrawNum(i, size, x, y);
+    }
+}
+
 void OGLWidget::mousePressEvent(QMouseEvent *apEvent){
     mPosition = apEvent->position();
     if(setAddLine){
@@ -329,9 +343,6 @@ void OGLWidget::mousePressEvent(QMouseEvent *apEvent){
         } else if(behindP(&redP)){
             repaint();
         }
-    }
-    if(behindL(&redL)){
-        repaint();
     }
 }
 

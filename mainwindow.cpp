@@ -82,3 +82,18 @@ void MainWindow::on_pushButton_kpNums_clicked()
         ui->openGLWidget->kpNumsShow = 0;
     ui->openGLWidget->repaint();
 }
+
+void MainWindow::on_pushButton_lNums_clicked()
+{
+    if(ui->pushButton_lNums->isChecked())
+        ui->openGLWidget->lNumsShow = 1;
+    else
+        ui->openGLWidget->lNumsShow = 0;
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_pushButton_add_q_clicked()
+{
+    ui->openGLWidget->addQ(ui->spinBox_kernel_numberQ->value(), ui->doubleSpinBox_value_q->value(), ui->doubleSpinBox_value2_q->value(), ui->comboBox_axis_q->currentIndex()+1);
+    ui->openGLWidget->repaint();
+}
