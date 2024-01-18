@@ -142,7 +142,7 @@
         <x>10</x>
         <y>150</y>
         <width>281</width>
-        <height>191</height>
+        <height>141</height>
        </rect>
       </property>
       <property name="title">
@@ -154,11 +154,11 @@
          <x>0</x>
          <y>20</y>
          <width>281</width>
-         <height>171</height>
+         <height>121</height>
         </rect>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab_coords">
         <attribute name="title">
@@ -170,7 +170,7 @@
            <x>10</x>
            <y>10</y>
            <width>261</width>
-           <height>121</height>
+           <height>71</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -204,7 +204,7 @@
            <x>10</x>
            <y>10</y>
            <width>251</width>
-           <height>121</height>
+           <height>71</height>
           </rect>
          </property>
          <property name="text">
@@ -313,7 +313,7 @@
       <property name="title">
        <string>Add q</string>
       </property>
-      <widget class="QWidget" name="layoutWidget">
+      <widget class="QWidget" name="">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -372,6 +372,72 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_add_q">
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_addm">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>260</y>
+        <width>277</width>
+        <height>124</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Add m</string>
+      </property>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>261</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QSpinBox" name="spinBox_point_numberm"/>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_value_m">
+            <property name="minimum">
+             <double>-10000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_axis_m">
+            <item>
+             <property name="text">
+              <string>Ox</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Oy</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_add_m">
           <property name="text">
            <string>Add</string>
           </property>

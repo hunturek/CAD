@@ -46,6 +46,8 @@ private slots:
 
     void on_pushButton_add_q_clicked();
 
+    void on_pushButton_add_m_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

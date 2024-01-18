@@ -42,6 +42,7 @@ void OGLWidget::paintGL(){
     glColor3f(1.0f, 0, 0);
     DrawP();
     DrawQ();
+    DrawM();
 }
 
 void OGLWidget::DrawL(){
@@ -86,6 +87,26 @@ void OGLWidget::DrawQ(){
         if(i_obj.q[i].w() == 3)
             DrawTrapZ(i_obj.q[i].z(), orientation(i_obj.q[i].x()), orientation(i_obj.q[i].y()), scale*0.2);
     }
+}
+
+void OGLWidget::DrawM(){
+    for(size_t i = 0; i < c_obj.m; i++){
+        if(i_obj.m[i].z() == 1)
+            DrawArcArrowX(i_obj.kp[(int)i_obj.m[i].x()].x(), i_obj.kp[(int)i_obj.m[i].x()].y(), scale*0.2, orientation(i_obj.m[i].y()));
+    }
+}
+
+void OGLWidget::DrawArcArrowX(float x, float y, float size, float orientation){
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x,y);
+    glVertex2f(x+(size/2*orientation), y+size/2);
+    glVertex2f(x, y+size);
+    glVertex2f(x-(size/2*orientation), y+size/2);
+    glVertex2f(x-(size/4*orientation), y+size/2);
+    glEnd();
+    glBegin(GL_LINE_STRIP);
+    glVertex2f(x-(size/2*orientation), y+size/2);
+    glVertex2f(x-(size/2*orientation), y+size/4*3);
 }
 
 void OGLWidget::DrawArrowX(size_t n, float x, float size){

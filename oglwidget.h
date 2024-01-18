@@ -49,6 +49,7 @@ public:
     void addLine(int p1, int p2);
     void addP(int pNum, float value, int axis);
     void addQ(int kNum, float value1, float value2, int axis);
+    void addM(int pNum, float value, int axis);
     void flushFile();
     int loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj);
     int outFile(QString filename, outcoming_objects o_obj);
@@ -84,12 +85,14 @@ private:
     void DrawKp();
     void DrawP();
     void DrawQ();
+    void DrawM();
     void DrawTrapX(size_t n, float x1, float x2, float size);
     void DrawTrapY(size_t n, float y1, float y2, float size);
     void DrawTrapZ(size_t n, float z1, float z2, float size);
     void DrawArrowX(size_t n, float x, float size);
     void DrawArrowY(size_t n, float y, float size);
     void DrawArrowZ(size_t n, float z, float size);
+    void DrawArcArrowX(float x, float y, float size, float orientation);
     void DrawNum(float num, float size, float x, float y);
     void Draw0(float size, float x, float y);
     void Draw1(float size, float x, float y);

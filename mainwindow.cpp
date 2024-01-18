@@ -97,3 +97,9 @@ void MainWindow::on_pushButton_add_q_clicked()
     ui->openGLWidget->addQ(ui->spinBox_kernel_numberQ->value(), ui->doubleSpinBox_value_q->value(), ui->doubleSpinBox_value2_q->value(), ui->comboBox_axis_q->currentIndex()+1);
     ui->openGLWidget->repaint();
 }
+
+void MainWindow::on_pushButton_add_m_clicked()
+{
+    ui->openGLWidget->addM(ui->spinBox_point_numberm->value(), ui->doubleSpinBox_value_m->value(), ui->comboBox_axis_m->currentIndex()+1);
+    ui->openGLWidget->repaint();
+}
