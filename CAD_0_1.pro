@@ -10,11 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     back.cpp \
+    fem.cpp \
     main.cpp \
     mainwindow.cpp \
     oglwidget.cpp
 
 HEADERS += \
+    fem.h \
     mainwindow.h \
     oglwidget.h
 

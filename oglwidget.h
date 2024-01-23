@@ -59,6 +59,9 @@ public:
     int kpNumsShow = 0;
     int lNumsShow = 0;
 
+    float pRatio = 0.3;
+    float yModulus = 2e11;
+
 signals:
 protected:
     void initializeGL() override; // Метод для инициализирования opengl
