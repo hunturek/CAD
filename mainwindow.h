@@ -25,7 +25,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
+public slots:
     void on_pushButton_addPoint_clicked();
 
     void on_pushButton_addLine_clicked();
@@ -47,6 +47,12 @@ private slots:
     void on_pushButton_add_q_clicked();
 
     void on_pushButton_add_m_clicked();
+
+    void on_pushButton_add_r_clicked();
+
+    void on_pushButton_add_u_clicked();
+
+    void on_lineEdit_commandLine_editingFinished();
 
 private:
     Ui::MainWindow *ui;

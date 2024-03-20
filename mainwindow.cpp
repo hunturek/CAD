@@ -61,6 +61,11 @@ void MainWindow::on_pushButton_loadFile_clicked()
     if(ui->openGLWidget->i_filename != ""){
         ui->label_openFile->setText("FILE OPEN");
         ui->label_openFile->setStyleSheet("QLabel { color : green; }");
+        ui->toolBox->setEnabled(true);
+        ui->pushButton_kpNums->setEnabled(true);
+        ui->pushButton_lNums->setEnabled(true);
+        ui->pushButton_res->setEnabled(true);
+        ui->pushButton_flush->setEnabled(true);
         ui->openGLWidget->repaint();
     } else {
         ui->label_openFile->setText("NO FILE");
@@ -70,7 +75,8 @@ void MainWindow::on_pushButton_loadFile_clicked()
 
 void MainWindow::on_pushButton_addP_clicked()
 {
-    ui->openGLWidget->addP(ui->spinBox_point_numberP->value(), ui->doubleSpinBox_valueP->value(), ui->comboBox_axisP->currentIndex()+1);
+    if(ui->openGLWidget->c_obj.kp > (size_t)ui->spinBox_point_numberP->value())
+        ui->openGLWidget->addP(ui->spinBox_point_numberP->value(), ui->doubleSpinBox_valueP->value(), ui->comboBox_axisP->currentIndex()+1);
     ui->openGLWidget->repaint();
 }
 
@@ -94,12 +100,34 @@ void MainWindow::on_pushButton_lNums_clicked()
 
 void MainWindow::on_pushButton_add_q_clicked()
 {
-    ui->openGLWidget->addQ(ui->spinBox_kernel_numberQ->value(), ui->doubleSpinBox_value_q->value(), ui->doubleSpinBox_value2_q->value(), ui->comboBox_axis_q->currentIndex()+1);
+    if(ui->openGLWidget->c_obj.l > (size_t)ui->spinBox_kernel_numberQ->value())
+        ui->openGLWidget->addQ(ui->spinBox_kernel_numberQ->value(), ui->doubleSpinBox_value_q->value(), ui->doubleSpinBox_value2_q->value(), ui->comboBox_axis_q->currentIndex()+1);
     ui->openGLWidget->repaint();
 }
 
 void MainWindow::on_pushButton_add_m_clicked()
 {
-    ui->openGLWidget->addM(ui->spinBox_point_numberm->value(), ui->doubleSpinBox_value_m->value(), ui->comboBox_axis_m->currentIndex()+1);
+    if(ui->openGLWidget->c_obj.kp > (size_t)ui->spinBox_point_numberm->value())
+        ui->openGLWidget->addM(ui->spinBox_point_numberm->value(), ui->doubleSpinBox_value_m->value(), ui->comboBox_axis_m->currentIndex()+1);
     ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_pushButton_add_r_clicked()
+{
+    if(ui->openGLWidget->c_obj.kp > (size_t)ui->spinBox_point_numberr->value())
+        ui->openGLWidget->addR(ui->spinBox_point_numberr->value(), ui->doubleSpinBox_value_r->value(), ui->comboBox_axis_r->currentIndex()+1);
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_pushButton_add_u_clicked()
+{
+    if(ui->openGLWidget->c_obj.kp > (size_t)ui->spinBox_point_numberu->value())
+        ui->openGLWidget->addU(ui->spinBox_point_numberu->value(), ui->doubleSpinBox_value_u->value(), ui->comboBox_axis_u->currentIndex()+1);
+    ui->openGLWidget->repaint();
+}
+
+void MainWindow::on_lineEdit_commandLine_editingFinished()
+{
+    ui->openGLWidget->command_line(ui->lineEdit_commandLine->text());
+    ui->lineEdit_commandLine->setText("");
 }

@@ -50,10 +50,16 @@ public:
     void addP(int pNum, float value, int axis);
     void addQ(int kNum, float value1, float value2, int axis);
     void addM(int pNum, float value, int axis);
+    void addR(int pNum, float value, int axis);
+    void addU(int pNum, float value, int axis);
+
     void flushFile();
-    int loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj);
+    int loadFile(QString filename);
     int outFile(QString filename, outcoming_objects o_obj);
     void fill_o(outcoming_objects *o_obj);
+
+    void command_line(QString command);
+
     bool setAddLine = false;
     int redP = -1;
     int kpNumsShow = 0;
@@ -89,13 +95,17 @@ private:
     void DrawP();
     void DrawQ();
     void DrawM();
+    void DrawU();
+    void DrawR();
     void DrawTrapX(size_t n, float x1, float x2, float size);
     void DrawTrapY(size_t n, float y1, float y2, float size);
     void DrawTrapZ(size_t n, float z1, float z2, float size);
     void DrawArrowX(size_t n, float x, float size);
     void DrawArrowY(size_t n, float y, float size);
     void DrawArrowZ(size_t n, float z, float size);
-    void DrawArcArrowX(float x, float y, float size, float orientation);
+    void DrawArcArrow(float x, float y, float size, float orientation);
+    void DrawRect(float x, float y, float size);
+    void DrawRumb(float x, float y, float size);
     void DrawNum(float num, float size, float x, float y);
     void Draw0(float size, float x, float y);
     void Draw1(float size, float x, float y);
@@ -113,6 +123,16 @@ private:
 
     float modelSize();
     int orientation(float x);
+
+    QMap<QString, std::function<void(float, float, float, float)>> commands = {
+        {"kp", [this](float x, float y, float z, float d) {addPoint(x, y); Q_UNUSED(z); Q_UNUSED(d);}},
+        {"l", [this](float x, float y, float z, float d) {addLine(round(x), round(y)); Q_UNUSED(z); Q_UNUSED(d);}},
+        {"P", [this](float x, float y, float z, float d) {addP(round(x), y, round(z)); Q_UNUSED(d);}},
+        {"q", [this](float x, float y, float z, float d) {addQ(round(x), y, z, round(d));}},
+        {"m", [this](float x, float y, float z, float d) {addM(round(x), y, round(z)); Q_UNUSED(d);}},
+        {"r", [this](float x, float y, float z, float d) {addR(round(x), y, round(z)); Q_UNUSED(d);}},
+        {"u", [this](float x, float y, float z, float d) {addU(round(x), y, round(z)); Q_UNUSED(d);}}
+    };
 };
 
 #endif // OGLWIDGET_H

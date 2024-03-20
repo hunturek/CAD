@@ -5,7 +5,7 @@ OGLWidget::OGLWidget(QWidget *parent)
     : QOpenGLWidget{parent}
 {
     if(i_filename != "")
-        loadFile(i_filename, &i_obj, &c_obj);
+        loadFile(i_filename);
     repaint();
     setMouseTracking(false);
     global_0.setX(230);
@@ -23,7 +23,7 @@ void OGLWidget::resizeGL(int w, int h){
 
 void OGLWidget::paintGL(){
     if(i_filename != "")
-        loadFile(i_filename, &i_obj, &c_obj);
+        loadFile(i_filename);
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     glDisable(GL_BLEND);
@@ -43,6 +43,9 @@ void OGLWidget::paintGL(){
     DrawP();
     DrawQ();
     DrawM();
+    glColor3f(1.0f, 1.0f, 0);
+    DrawR();
+    DrawU();
 }
 
 void OGLWidget::DrawL(){
@@ -91,22 +94,34 @@ void OGLWidget::DrawQ(){
 
 void OGLWidget::DrawM(){
     for(size_t i = 0; i < c_obj.m; i++){
-        if(i_obj.m[i].z() == 1)
-            DrawArcArrowX(i_obj.kp[(int)i_obj.m[i].x()].x(), i_obj.kp[(int)i_obj.m[i].x()].y(), scale*0.2, orientation(i_obj.m[i].y()));
+            DrawArcArrow(i_obj.kp[(int)i_obj.m[i].x()].x(), i_obj.kp[(int)i_obj.m[i].x()].y(), scale*0.2, orientation(i_obj.m[i].y()));
     }
 }
 
-void OGLWidget::DrawArcArrowX(float x, float y, float size, float orientation){
+void OGLWidget::DrawR(){
+    for(size_t i = 0; i < c_obj.r; i++){
+            DrawRumb(i_obj.kp[(int)i_obj.r[i].x()].x(), i_obj.kp[(int)i_obj.r[i].x()].y(), scale*0.2);
+    }
+}
+
+void OGLWidget::DrawU(){
+    for(size_t i = 0; i < c_obj.u; i++){
+            DrawRect(i_obj.kp[(int)i_obj.u[i].x()].x(), i_obj.kp[(int)i_obj.u[i].x()].y(), scale*0.2);
+    }
+}
+
+void OGLWidget::DrawArcArrow(float x, float y, float size, float orientation){
     glBegin(GL_LINE_STRIP);
     glVertex2f(x,y);
     glVertex2f(x+(size/2*orientation), y+size/2);
     glVertex2f(x, y+size);
     glVertex2f(x-(size/2*orientation), y+size/2);
-    glVertex2f(x-(size/4*orientation), y+size/2);
     glEnd();
     glBegin(GL_LINE_STRIP);
+    glVertex2f(x, y+size/2);
     glVertex2f(x-(size/2*orientation), y+size/2);
-    glVertex2f(x-(size/2*orientation), y+size/4*3);
+    glVertex2f(x-(size/2*orientation), y+size);
+    glEnd();
 }
 
 void OGLWidget::DrawArrowX(size_t n, float x, float size){
@@ -178,6 +193,24 @@ void OGLWidget::DrawTrapZ(size_t n, float z1, float z2, float size){
     glBegin(GL_LINE_LOOP);
     glVertex3f(i_obj.kp[(int)i_obj.l[n].x()].x(), i_obj.kp[(int)i_obj.l[n].x()].y(), size*z1);
     glVertex3f(i_obj.kp[(int)i_obj.l[n].y()].x(), i_obj.kp[(int)i_obj.l[n].y()].y(), size*z2);
+    glEnd();
+}
+
+void OGLWidget::DrawRumb(float x, float y, float size){
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(x, y + size/6);
+    glVertex2f(x + size/6, y);
+    glVertex2f(x, y - size/6);
+    glVertex2f(x - size/6, y);
+    glEnd();
+}
+
+void OGLWidget::DrawRect(float x, float y, float size){
+    glBegin(GL_LINE_LOOP);
+    glVertex2f(x + size/6, y + size/6);
+    glVertex2f(x + size/6, y - size/6);
+    glVertex2f(x - size/6, y - size/6);
+    glVertex2f(x - size/6, y + size/6);
     glEnd();
 }
 

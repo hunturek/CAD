@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>CAD_0.1</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="OGLWidget" name="openGLWidget">
@@ -25,6 +25,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_res">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -38,6 +41,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_flush">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>500</x>
@@ -51,6 +57,9 @@
     </property>
    </widget>
    <widget class="QToolBox" name="toolBox">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -60,7 +69,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_geometry">
      <property name="geometry">
@@ -255,10 +264,20 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QSpinBox" name="spinBox_point_numberP"/>
+           <widget class="QSpinBox" name="spinBox_point_numberP">
+            <property name="specialValueText">
+             <string/>
+            </property>
+            <property name="value">
+             <number>0</number>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QDoubleSpinBox" name="doubleSpinBox_valueP">
+            <property name="specialValueText">
+             <string/>
+            </property>
             <property name="minimum">
              <double>-10000.000000000000000</double>
             </property>
@@ -313,7 +332,7 @@
       <property name="title">
        <string>Add q</string>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -326,10 +345,17 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QSpinBox" name="spinBox_kernel_numberQ"/>
+           <widget class="QSpinBox" name="spinBox_kernel_numberQ">
+            <property name="specialValueText">
+             <string/>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QDoubleSpinBox" name="doubleSpinBox_value_q">
+            <property name="specialValueText">
+             <string/>
+            </property>
             <property name="minimum">
              <double>-10000.000000000000000</double>
             </property>
@@ -392,7 +418,7 @@
       <property name="title">
        <string>Add m</string>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -405,7 +431,11 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <widget class="QSpinBox" name="spinBox_point_numberm"/>
+           <widget class="QSpinBox" name="spinBox_point_numberm">
+            <property name="specialValueText">
+             <string/>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QDoubleSpinBox" name="doubleSpinBox_value_m">
@@ -459,6 +489,146 @@
      <attribute name="label">
       <string>Degree-of-freedom</string>
      </attribute>
+     <widget class="QGroupBox" name="groupBox_addu">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>277</width>
+        <height>124</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Add u</string>
+      </property>
+      <widget class="QWidget" name="layoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>261</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QSpinBox" name="spinBox_point_numberu">
+            <property name="specialValueText">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_value_u">
+            <property name="minimum">
+             <double>-10000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_axis_u">
+            <item>
+             <property name="text">
+              <string>Ox</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Oy</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_add_u">
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_addr">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>277</width>
+        <height>124</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Add r</string>
+      </property>
+      <widget class="QWidget" name="layoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>261</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_9">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <widget class="QSpinBox" name="spinBox_point_numberr">
+            <property name="specialValueText">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="doubleSpinBox_value_r">
+            <property name="minimum">
+             <double>-10000.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10000.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_axis_r">
+            <item>
+             <property name="text">
+              <string>Ox</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Oy</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_add_r">
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -505,6 +675,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_5">
      <item>
       <widget class="QPushButton" name="pushButton_kpNums">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Show KP nums</string>
        </property>
@@ -515,6 +688,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_lNums">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Show L nums</string>
        </property>
@@ -524,6 +700,16 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_commandLine">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>530</y>
+      <width>441</width>
+      <height>27</height>
+     </rect>
+    </property>
    </widget>
   </widget>
  </widget>

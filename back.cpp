@@ -1,58 +1,60 @@
 #include "oglwidget.h"
 
-int OGLWidget::loadFile(QString filename, incoming_objects *i_obj, objects_counts *c_obj){
+int OGLWidget::loadFile(QString filename){
     QFile file(filename);
-    c_obj->P=0;
-    c_obj->kp=0;
-    c_obj->l=0;
-    c_obj->q=0;
-    c_obj->r=0;
-    c_obj->u=0;
+    c_obj.P=0;
+    c_obj.kp=0;
+    c_obj.l=0;
+    c_obj.q=0;
+    c_obj.r=0;
+    c_obj.u=0;
+    c_obj.m=0;
     file.open(QIODevice::ReadOnly);
     while(!file.atEnd())
     {
         QString str = file.readLine();
+        //command_line(str);
         QStringList lst = str.split(" ");
         if(lst.at(0) == "kp"){
-            i_obj->kp[c_obj->kp].setX(lst.at(1).toFloat()); //координата X
-            i_obj->kp[c_obj->kp].setY(lst.at(2).toFloat()); //координата Y
-            c_obj->kp++;
+            i_obj.kp[c_obj.kp].setX(lst.at(1).toFloat()); //координата X
+            i_obj.kp[c_obj.kp].setY(lst.at(2).toFloat()); //координата Y
+            c_obj.kp++;
         }
         if(lst.at(0) == "l"){
-            i_obj->l[c_obj->l].setX(lst.at(1).toInt()); //номер первой точки
-            i_obj->l[c_obj->l].setY(lst.at(2).toInt()); //номер второй точки
-            c_obj->l++;
+            i_obj.l[c_obj.l].setX(lst.at(1).toInt()); //номер первой точки
+            i_obj.l[c_obj.l].setY(lst.at(2).toInt()); //номер второй точки
+            c_obj.l++;
         }
         if(lst.at(0) == "P"){
-            i_obj->P[c_obj->P].setX(lst.at(1).toFloat()); //номер точки
-            i_obj->P[c_obj->P].setY(lst.at(2).toFloat()); //значение
-            i_obj->P[c_obj->P].setZ(lst.at(3).toFloat()); //ось (1-x 2-y 3-z)
-            c_obj->P++;
+            i_obj.P[c_obj.P].setX(lst.at(1).toFloat()); //номер точки
+            i_obj.P[c_obj.P].setY(lst.at(2).toFloat()); //значение
+            i_obj.P[c_obj.P].setZ(lst.at(3).toFloat()); //ось (1-x 2-y 3-z)
+            c_obj.P++;
         }
         if(lst.at(0) == "m"){
-            i_obj->m[c_obj->m].setX(lst.at(1).toFloat()); //номер точки
-            i_obj->m[c_obj->m].setY(lst.at(2).toFloat()); //значение
-            i_obj->m[c_obj->m].setZ(lst.at(3).toFloat()); //ось
-            c_obj->m++;
+            i_obj.m[c_obj.m].setX(lst.at(1).toFloat()); //номер точки
+            i_obj.m[c_obj.m].setY(lst.at(2).toFloat()); //значение
+            i_obj.m[c_obj.m].setZ(lst.at(3).toFloat()); //ось
+            c_obj.m++;
         }
         if(lst.at(0) == "q"){
-            i_obj->q[c_obj->q].setZ(lst.at(1).toFloat()); //номер стержня
-            i_obj->q[c_obj->q].setX(lst.at(2).toFloat()); //значение справа
-            i_obj->q[c_obj->q].setY(lst.at(3).toFloat()); //значение слева
-            i_obj->q[c_obj->q].setW(lst.at(4).toFloat()); //ось
-            c_obj->q++;
+            i_obj.q[c_obj.q].setZ(lst.at(1).toFloat()); //номер стержня
+            i_obj.q[c_obj.q].setX(lst.at(2).toFloat()); //значение справа
+            i_obj.q[c_obj.q].setY(lst.at(3).toFloat()); //значение слева
+            i_obj.q[c_obj.q].setW(lst.at(4).toFloat()); //ось
+            c_obj.q++;
         }
         if(lst.at(0) == "u"){
-            i_obj->u[c_obj->u].setX(lst.at(1).toFloat()); //номер точки
-            i_obj->u[c_obj->u].setY(lst.at(2).toFloat()); //значение
-            i_obj->u[c_obj->u].setZ(lst.at(3).toFloat()); //ось
-            c_obj->u++;
+            i_obj.u[c_obj.u].setX(lst.at(1).toFloat()); //номер точки
+            i_obj.u[c_obj.u].setY(lst.at(2).toFloat()); //значение
+            i_obj.u[c_obj.u].setZ(lst.at(3).toFloat()); //ось
+            c_obj.u++;
         }
         if(lst.at(0) == "r"){
-            i_obj->r[c_obj->r].setX(lst.at(1).toFloat()); //номер точки
-            i_obj->r[c_obj->r].setY(lst.at(2).toFloat()); //значение
-            i_obj->r[c_obj->r].setZ(lst.at(3).toFloat()); //ось
-            c_obj->r++;
+            i_obj.r[c_obj.r].setX(lst.at(1).toFloat()); //номер точки
+            i_obj.r[c_obj.r].setY(lst.at(2).toFloat()); //значение
+            i_obj.r[c_obj.r].setZ(lst.at(3).toFloat()); //ось
+            c_obj.r++;
         }
     }
     file.close();
@@ -148,6 +150,9 @@ void OGLWidget::addPoint(float x, float y){
     file.open(QIODevice::Append);
     writeStream << s1;
     file.close();
+//    i_obj.kp[c_obj.kp].setX(x); //координата X
+//    i_obj.kp[c_obj.kp].setY(y); //координата Y
+//    c_obj.kp++;
 }
 
 void OGLWidget::addLine(int p1, int p2){
@@ -160,6 +165,9 @@ void OGLWidget::addLine(int p1, int p2){
     file.open(QIODevice::Append | QIODevice::Text);
     writeStream << s1;
     file.close();
+//    i_obj.l[c_obj.l].setX(p1); //номер первой точки
+//    i_obj.l[c_obj.l].setY(p2); //номер второй точки
+//    c_obj.l++;
 }
 
 void OGLWidget::addP(int pNum, float value, int axis){
@@ -175,6 +183,10 @@ void OGLWidget::addP(int pNum, float value, int axis){
     file.open(QIODevice::Append | QIODevice::Text);
     writeStream << s1;
     file.close();
+//    i_obj.P[c_obj.P].setX(pNum); //номер точки
+//    i_obj.P[c_obj.P].setY(value); //значение
+//    i_obj.P[c_obj.P].setZ(axis); //ось (1-x 2-y 3-z)
+//    c_obj.P++;
 }
 
 void OGLWidget::addQ(int kNum, float value1, float value2, int axis){
@@ -192,10 +204,15 @@ void OGLWidget::addQ(int kNum, float value1, float value2, int axis){
     file.open(QIODevice::Append | QIODevice::Text);
     writeStream << s1;
     file.close();
+//    i_obj.q[c_obj.q].setZ(kNum); //номер стержня
+//    i_obj.q[c_obj.q].setX(value1); //значение справа
+//    i_obj.q[c_obj.q].setY(value2); //значение слева
+//    i_obj.q[c_obj.q].setW(axis); //ось
+//    c_obj.q++;
 }
 
 void OGLWidget::addM(int pNum, float value, int axis){
-    QString s1 = "\nP ";
+    QString s1 = "\nm ";
     s1.append(QString::number(pNum));
     s1.append(" ");
     s1.append(QString::number(value));
@@ -207,4 +224,54 @@ void OGLWidget::addM(int pNum, float value, int axis){
     file.open(QIODevice::Append | QIODevice::Text);
     writeStream << s1;
     file.close();
+//    i_obj.m[c_obj.m].setX(pNum); //номер точки
+//    i_obj.m[c_obj.m].setY(value); //значение
+//    i_obj.m[c_obj.m].setZ(axis); //ось
+//    c_obj.m++;
+}
+
+void OGLWidget::addR(int pNum, float value, int axis){
+    QString s1 = "\nr ";
+    s1.append(QString::number(pNum));
+    s1.append(" ");
+    s1.append(QString::number(value));
+    s1.append(" ");
+    s1.append(QString::number(axis));
+    s1.append(" ");
+    QFile file(i_filename);
+    QTextStream writeStream(&file);
+    file.open(QIODevice::Append | QIODevice::Text);
+    writeStream << s1;
+    file.close();
+//    i_obj.r[c_obj.r].setX(pNum); //номер точки
+//    i_obj.r[c_obj.r].setY(value); //значение
+//    i_obj.r[c_obj.r].setZ(axis); //ось
+//    c_obj.r++;
+}
+
+void OGLWidget::addU(int pNum, float value, int axis){
+    QString s1 = "\nu ";
+    s1.append(QString::number(pNum));
+    s1.append(" ");
+    s1.append(QString::number(value));
+    s1.append(" ");
+    s1.append(QString::number(axis));
+    s1.append(" ");
+    QFile file(i_filename);
+    QTextStream writeStream(&file);
+    file.open(QIODevice::Append | QIODevice::Text);
+    writeStream << s1;
+    file.close();
+//    i_obj.u[c_obj.u].setX(pNum); //номер точки
+//    i_obj.u[c_obj.u].setY(value); //значение
+//    i_obj.u[c_obj.u].setZ(axis); //ось
+//    c_obj.u++;
+}
+
+void OGLWidget::command_line(QString command){
+    QStringList parse = command.split(" ");
+    if(commands.contains(parse[0])){
+        commands[parse[0]](parse[1].toFloat(), parse[2].toFloat(), (3 < std::size(parse)) ? parse[3].toFloat() : 0, (4 < std::size(parse)) ? parse[4].toFloat() : 0);
+    }
+    repaint();
 }
