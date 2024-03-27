@@ -24,8 +24,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void command_line(QString command, bool write_mode);
+    int open_file(QString filename);
 
-public slots:
+
+private slots:
     void on_pushButton_addPoint_clicked();
 
     void on_pushButton_addLine_clicked();

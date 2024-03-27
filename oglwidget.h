@@ -12,23 +12,27 @@ public:
     explicit OGLWidget(QWidget *parent = nullptr);
 
     struct incoming_objects{
-        QVector2D *kp = new QVector2D;
-        QVector3D *l = new QVector3D;
-        QVector3D *P = new QVector3D;
-        QVector3D *m = new QVector3D;
-        QVector4D *q = new QVector4D;
-        QVector3D *u = new QVector3D;
-        QVector3D *r = new QVector3D;
-    };
+        QVector<QVector2D> kp;
+        QVector<QVector2D> l;
+        QVector<QVector3D> P;
+        QVector<QVector3D> m;
+        QVector<QVector4D> q;
+        QVector<QVector3D> u;
+        QVector<QVector3D> r;
 
-    struct objects_counts{
-        size_t kp = 0;
-        size_t l = 0;
-        size_t P = 0;
-        size_t m = 0;
-        size_t q = 0;
-        size_t u = 0;
-        size_t r = 0;
+        void clear(){
+                    kp.clear();
+                    l.clear();
+                    P.clear();
+                    m.clear();
+                    q.clear();
+                    u.clear();
+                    r.clear();
+        }
+
+        ~incoming_objects() {
+                this->clear();
+            }
     };
 
     struct outcoming_objects{
@@ -38,10 +42,18 @@ public:
         QVector2D *V = new QVector2D; //значение слева, значение справа
         QVector2D *U = new QVector2D; //значение слева, значение справа
         QVector2D *Sig = new QVector2D; //значение слева, значение справа
+
+        ~outcoming_objects() {
+                delete Q;
+                delete M;
+                delete N;
+                delete V;
+                delete U;
+                delete Sig;
+            }
     };
 
     incoming_objects i_obj;
-    objects_counts c_obj;
     outcoming_objects o_obj;
     QString i_filename = "";
     QString o_filename = "";
@@ -54,16 +66,18 @@ public:
     void addU(int pNum, float value, int axis);
 
     void flushFile();
-    int loadFile(QString filename);
     int outFile(QString filename, outcoming_objects o_obj);
     void fill_o(outcoming_objects *o_obj);
-
-    void command_line(QString command);
 
     bool setAddLine = false;
     int redP = -1;
     int kpNumsShow = 0;
     int lNumsShow = 0;
+    int PShow = 1;
+    int qShow = 1;
+    int mShow = 1;
+    int uShow = 1;
+    int rShow = 1;
 
     float pRatio = 0.3;
     float yModulus = 2e11;
@@ -123,16 +137,6 @@ private:
 
     float modelSize();
     int orientation(float x);
-
-    QMap<QString, std::function<void(float, float, float, float)>> commands = {
-        {"kp", [this](float x, float y, float z, float d) {addPoint(x, y); Q_UNUSED(z); Q_UNUSED(d);}},
-        {"l", [this](float x, float y, float z, float d) {addLine(round(x), round(y)); Q_UNUSED(z); Q_UNUSED(d);}},
-        {"P", [this](float x, float y, float z, float d) {addP(round(x), y, round(z)); Q_UNUSED(d);}},
-        {"q", [this](float x, float y, float z, float d) {addQ(round(x), y, z, round(d));}},
-        {"m", [this](float x, float y, float z, float d) {addM(round(x), y, round(z)); Q_UNUSED(d);}},
-        {"r", [this](float x, float y, float z, float d) {addR(round(x), y, round(z)); Q_UNUSED(d);}},
-        {"u", [this](float x, float y, float z, float d) {addU(round(x), y, round(z)); Q_UNUSED(d);}}
-    };
 };
 
 #endif // OGLWIDGET_H
